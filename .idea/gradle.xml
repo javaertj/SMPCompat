@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/PickerviewLib" />
+            <option value="$PROJECT_DIR$/PushSDK" />
+            <option value="$PROJECT_DIR$/SMTCompatLib" />
+            <option value="$PROJECT_DIR$/adapter" />
+            <option value="$PROJECT_DIR$/apicontrol" />
+            <option value="$PROJECT_DIR$/autoupdate" />
+            <option value="$PROJECT_DIR$/baidumap" />
+            <option value="$PROJECT_DIR$/commonlibrary" />
+            <option value="$PROJECT_DIR$/recyclerview-swipe" />
+            <option value="$PROJECT_DIR$/rxwebsocket" />
+            <option value="$PROJECT_DIR$/sharelibrary" />
+            <option value="$PROJECT_DIR$/simpletourimlibrary" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

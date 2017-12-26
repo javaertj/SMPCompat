@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:src="@color/pickerview_wheelview_textcolor_divider" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="@string/pickerview_submit"
+        android:textColor="@color/picker_red"
+        android:textSize="@dimen/pickerview_topbar_btn_textsize" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/pickerview_topbar_title"
+        android:textSize="@dimen/pickerview_topbar_title_textsize"
+        android:visibility="gone" />
+
+
+    <ImageView
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:src="@color/pickerview_wheelview_textcolor_divider" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="@string/pickerview_cancel"
+        android:textColor="@color/picker_gray_dark"
+        android:textSize="@dimen/pickerview_topbar_btn_textsize" />
+
+
+</LinearLayout>

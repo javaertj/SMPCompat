@@ -1,0 +1,1 @@
+include ':SMTCompatLib', ':PickerviewLib', ':recyclerview-swipe', ':baidumap', ':sharelibrary', ':adapter', ':rxwebsocket', ':simpletourimlibrary', ':commonlibrary', ':apicontrol', ':autoupdate', ':PushSDK'
