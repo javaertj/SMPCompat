@@ -21,8 +21,8 @@ ext {
     bintray = [
             version       : "1.0.0",
 
-            siteUrl       : 'https://github.com/yanzhenjie/SwipeRecyclerView',
-            gitUrl        : 'git@github.com:yanzhenjie/SwipeRecyclerView.git',
+            siteUrl       : 'https://github.com/ykbjson/SMPCompat',
+            gitUrl        : 'https://github.com/ykbjson/SMPCompat.git',
 
             group         : "com.simpletour",
 
@@ -36,14 +36,14 @@ ext {
             licenseUrl    : 'http://www.apache.org/licenses/LICENSE-2.0.txt',
 
             // project.developers
-            developerId   : '1',
+            developerId   : 'ykbjson',
             developerName : 'ykbjson',
             developerEmail: 'ykbdevelop@gmail.com',
 
             // bintray
-            binrayLibrary : "SMPCompat",
+            binrayLibrary : "SMTCompatLib",
             bintrayRepo   : "maven",
-            bintrayUser   : 'yolanda',
+            bintrayUser   : 'yankebin',
             bintrayLicense: "Apache-2.0"
     ]
 
