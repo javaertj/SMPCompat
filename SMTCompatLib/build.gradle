@@ -18,6 +18,7 @@ android {
 
 dependencies {
     compile project(':PickerviewLib')
+    compile project(':recyclerview-swipe')
     compile project(':baidumap')
     compile project(':sharelibrary')
     compile project(':adapter')

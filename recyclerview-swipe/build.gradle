@@ -18,5 +18,4 @@ android {
 dependencies {
     compile rootProject.ext.dependencies.recyclerView
     compile rootProject.ext.dependencies.loading
-    compile project(':SMTCompatLib')
 }
