@@ -17,5 +17,3 @@ dependencies {
     compile rootProject.ext.dependencies.recyclerView
     compile rootProject.ext.dependencies.loading
 }
-
-apply from: "https://github.com/yanzhenjie/bintray/blob/master/maven-auto.gradle?raw=true"

@@ -8,7 +8,6 @@
       <module fileurl="file://$PROJECT_DIR$/SMTCompatLib/SMTCompatLib.iml" filepath="$PROJECT_DIR$/SMTCompatLib/SMTCompatLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/adapter/adapter.iml" filepath="$PROJECT_DIR$/adapter/adapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/apicontrol/apicontrol.iml" filepath="$PROJECT_DIR$/apicontrol/apicontrol.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/autoupdate/autoupdate.iml" filepath="$PROJECT_DIR$/autoupdate/autoupdate.iml" />
       <module fileurl="file://$PROJECT_DIR$/baidumap/baidumap.iml" filepath="$PROJECT_DIR$/baidumap/baidumap.iml" />
       <module fileurl="file://$PROJECT_DIR$/commonlibrary/commonlibrary.iml" filepath="$PROJECT_DIR$/commonlibrary/commonlibrary.iml" />
