@@ -1,4 +1,11 @@
 apply plugin: rootProject.ext.plugins.library
+apply plugin: rootProject.ext.plugins.bintray
+
+version = rootProject.ext.bintray.version
+def siteUrl = rootProject.ext.bintray.siteUrl
+def gitUrl = rootProject.ext.bintray.gitUrl
+
+group = rootProject.ext.bintray.group
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -32,4 +39,4 @@ dependencies {
     compile project(':PushSDK')
 }
 
-apply from: "https://github.com/yanzhenjie/bintray/blob/master/maven-auto.gradle?raw=true"
+//apply from: "https://github.com/yanzhenjie/bintray/blob/master/maven-auto.gradle?raw=true"
