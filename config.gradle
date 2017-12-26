@@ -3,7 +3,8 @@ ext {
             library    : 'com.android.library',
             application: 'com.android.application',
             maven      : 'com.github.dcendents.android-maven',
-            bintray    : 'com.jfrog.bintray'
+            bintray    : 'com.jfrog.bintray',
+            apt        : 'com.neenbedankt.android-apt'
     ]
 
     android = [
