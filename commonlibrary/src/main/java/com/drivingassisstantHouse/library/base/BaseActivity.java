@@ -22,7 +22,6 @@ import com.drivingassisstantHouse.library.data.OnNetWorkEvent;
 import com.drivingassisstantHouse.library.tools.SLog;
 import com.mcxiaoke.bus.annotation.BusReceiver;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.analytics.social.UMSocialService;
 import com.umeng.message.PushAgent;
 
 import java.lang.ref.WeakReference;
@@ -63,10 +62,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
      * 共通操作
      **/
     protected Operation mOperation = null;
-    /**
-     * 友盟分享sdk
-     */
-    protected UMSocialService mController;
 
     protected BaseHandler baseHandler = new BaseHandler(this);
 
@@ -106,7 +101,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
         } else {
             bundle = new Bundle();
         }
-        initShareSDK();
         mContextView = getLayoutInflater().inflate(bindLayout(), null, false);
         // 设置渲染视图View
         setContentView(mContextView);
@@ -286,8 +280,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
         mAnimationType = NONE;
     }
 
-
-
     @BusReceiver
     public void onMainNetWorkEvent(OnNetWorkEvent event) {
         onNetWorkChanged(event.connected);
@@ -296,50 +288,5 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
     @Override
     public void onNetWorkChanged(boolean connected) {
 
-    }
-
-
-    /**
-     * 初始化友盟分享sdk
-     */
-//    @Override
-    protected void initShareSDK() {
-//        mController = UMServiceFactory.getUMSocialService("com.umeng.share");
-//        mController.getConfig().setPlatforms(SHARE_MEDIA.TENCENT, SHARE_MEDIA.QZONE, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA, SHARE_MEDIA.SMS, SHARE_MEDIA.RENREN, SHARE_MEDIA.DOUBAN);
-//        // 添加短信
-//        SmsHandler smsHandler = new SmsHandler();
-//        smsHandler.addToSocialSDK();
-//        // 添加email
-//        EmailHandler emailHandler = new EmailHandler();
-//        emailHandler.addToSocialSDK();
-//        // 添加有道云笔记平台
-//        UMYNoteHandler yNoteHandler = new UMYNoteHandler(this);
-//        yNoteHandler.addToSocialSDK();
-//        // 添加易信平台,参数1为当前activity, 参数2为在易信开放平台申请到的app id
-//        UMYXHandler yixinHandler = new UMYXHandler(this,
-//                "yxc0614e80c9304c11b0391514d09f13bf");
-//        // 关闭分享时的等待Dialog
-//        yixinHandler.enableLoadingDialog(false);
-//        // 把易信添加到SDK中
-//        yixinHandler.addToSocialSDK();
-//
-//        // 易信朋友圈平台,参数1为当前activity, 参数2为在易信开放平台申请到的app id
-//        UMYXHandler yxCircleHandler = new UMYXHandler(this,
-//                "yxc0614e80c9304c11b0391514d09f13bf");
-//        yxCircleHandler.setToCircle(true);
-//        yxCircleHandler.addToSocialSDK();
-//        //添加qq空间分享相关
-//        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, Constant.VALUE.SHARE_QQ_APPID, Constant.VALUE.SHARE_QQ_APPKEY);
-//        qZoneSsoHandler.addToSocialSDK();
-//        //参数1为当前Activity，参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
-//        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, Constant.VALUE.SHARE_QQ_APPID, Constant.VALUE.SHARE_QQ_APPKEY);
-//        qqSsoHandler.addToSocialSDK();
-//        // 添加微信平台
-//        UMWXHandler wxHandler = new UMWXHandler(this, Constant.VALUE.SHARE_WX_APPID, Constant.VALUE.SHARE_WX_APPKEY);
-//        wxHandler.addToSocialSDK();
-//        // 添加微信朋友圈
-//        UMWXHandler wxCircleHandler = new UMWXHandler(this, Constant.VALUE.SHARE_WX_APPID, Constant.VALUE.SHARE_WX_APPKEY);
-//        wxCircleHandler.setToCircle(true);
-//        wxCircleHandler.addToSocialSDK();
     }
 }

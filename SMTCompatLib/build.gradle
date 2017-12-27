@@ -24,15 +24,7 @@ android {
 }
 
 dependencies {
-    compile project(':PickerviewLib')
-    compile project(':recyclerview-swipe')
-    compile project(':baidumap')
-    compile project(':sharelibrary')
-    compile project(':adapter')
-    compile project(':simpletourimlibrary')
     compile project(':commonlibrary')
-    compile project(':autoupdate')
-    compile project(':PushSDK')
 }
 
 //apply from: "https://github.com/yanzhenjie/bintray/blob/master/maven-auto.gradle?raw=true"

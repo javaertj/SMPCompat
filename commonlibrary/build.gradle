@@ -37,10 +37,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    //recycleview
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:support-annotations:25.3.1'
     compile 'com.android.support:design:25.3.1'
     //rest+rxAndroid
     compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.3.0'
@@ -73,7 +69,6 @@ dependencies {
     compile 'com.lovedise:permissiongen:0.0.6'
     //图片选择器
     compile 'com.squareup.picasso:picasso:2.4.0'
-    compile 'com.android.support:support-v4:25.3.1'
 
     compile 'com.squareup.okhttp:okhttp-urlconnection:1.6.0'
     //bus
@@ -99,5 +94,14 @@ dependencies {
     //富文本显示text
     compile 'com.zzhoujay.richtext:richtext:2.3.7'
     compile 'com.growingio.android:vds-android-agent:0.9.103@aar'
+
+    compile project(':PickerviewLib')
+    compile project(':recyclerview-swipe')
+    compile project(':baidumap')
+    compile project(':sharelibrary')
+    compile project(':PushSDK')
+    compile project(':adapter')
+    compile project(':simpletourimlibrary')
+    compile project(':autoupdate')
 }
 
