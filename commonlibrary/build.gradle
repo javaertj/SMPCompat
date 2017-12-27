@@ -10,26 +10,6 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
     }
-    buildTypes {
-        release {
-            // 显示log
-            buildConfigField "boolean", "ENABLE_DEBUG", "false"
-            minifyEnabled false
-            //移除无用的资源文件
-            shrinkResources true
-            //Zipalign优化
-            zipAlignEnabled true
-        }
-        debug{
-            // 显示log
-            buildConfigField "boolean", "ENABLE_DEBUG", "true"
-            minifyEnabled false
-            //移除无用的资源文件
-            shrinkResources true
-            //Zipalign优化
-            zipAlignEnabled true
-        }
-    }
     lintOptions {
         abortOnError false
     }
