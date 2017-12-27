@@ -16,3 +16,4 @@ rxwebsocket/src/main/res/
 sample/libs/
 simpletourimlibrary/libs/
 simpletourimlibrary/src/main/res/
+.gitignore

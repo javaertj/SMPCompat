@@ -1,6 +1,5 @@
 apply plugin: rootProject.ext.plugins.library
-apply plugin: rootProject.ext.plugins.bintray
-apply plugin: rootProject.ext.plugins.apt
+apply plugin: rootProject.ext.plugins.maven
 
 group = rootProject.ext.bintray.group
 
@@ -17,9 +16,6 @@ android {
 
     lintOptions {
         abortOnError false
-    }
-    configurations {
-        all*.exclude group: 'com.umeng', module: 'message'
     }
 }
 
