@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="debug"><source path="/Users/yanan/Desktop/android_project/SMTCompat/PushSDK/build/intermediates/bundles/debug/assets"/></dataSet><dataSet config="main"><source path="/Users/yanan/Desktop/android_project/SMTCompat/PushSDK/src/androidTest/assets"/><source path="/Users/yanan/Desktop/android_project/SMTCompat/PushSDK/build/generated/assets/shaders/androidTest/debug"/></dataSet></merger>
