@@ -13,6 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/commonlibrary/commonlibrary.iml" filepath="$PROJECT_DIR$/commonlibrary/commonlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/recyclerview-swipe/recyclerview-swipe.iml" filepath="$PROJECT_DIR$/recyclerview-swipe/recyclerview-swipe.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxwebsocket/rxwebsocket.iml" filepath="$PROJECT_DIR$/rxwebsocket/rxwebsocket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/sharelibrary/sharelibrary.iml" filepath="$PROJECT_DIR$/sharelibrary/sharelibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/simpletourimlibrary/simpletourimlibrary.iml" filepath="$PROJECT_DIR$/simpletourimlibrary/simpletourimlibrary.iml" />
     </modules>

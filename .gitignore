@@ -1,4 +1,5 @@
 *.iml
+.idea
 .gradle
 /local.properties
 /.idea/workspace.xml
@@ -6,4 +7,12 @@
 .DS_Store
 /build
 /captures
-.externalNativeBuild
+SMTCompatLib/libs/
+SMTCompatLib/src/main/res/drawable/
+apicontrol/libs/
+baidumap/src/main/res/
+rxwebsocket/libs/
+rxwebsocket/src/main/res/
+sample/libs/
+simpletourimlibrary/libs/
+simpletourimlibrary/src/main/res/
