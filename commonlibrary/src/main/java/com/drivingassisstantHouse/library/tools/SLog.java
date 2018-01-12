@@ -16,11 +16,10 @@ import java.util.Date;
 public class SLog {
     private static boolean DEVELOP_MODE;
     private static String tag = "[AppName]";
-    private static int logLevel = Log.DEBUG;//Log.ERROR
     private static String mClassName = "简途旅行";
     private static File logCacheDir;
     private static File logCacheFile;
-    private static final long LOG_SAVE_TIME_LENGTH = new Date().getTime() - 5 * 24 * 60 * 60 * 1000L;
+    private static final Long LOG_SAVE_TIME_LENGTH = new Date().getTime() - 5 * 24 * 60 * 60 * 1000L;
 
     private SLog() {
 
@@ -33,9 +32,6 @@ public class SLog {
      */
     public static void init(boolean enableLog) {
         DEVELOP_MODE = enableLog;
-        if (!DEVELOP_MODE) {
-            logLevel = Log.ERROR;
-        }
     }
 
     /**
@@ -81,14 +77,6 @@ public class SLog {
         checkLogCache();
     }
 
-    /**
-     * 日志开关
-     *
-     * @return
-     */
-    private static boolean isLogFlag() {
-        return DEVELOP_MODE;
-    }
 
     /**
      * Get The Current Function Name
@@ -198,36 +186,24 @@ public class SLog {
         log(Log.ASSERT, logStr, tr);
     }
 
-    private static void log(int currentLogLevel, Object str) {
-        String logStr = getFunctionName();
-        if (str instanceof Throwable){
-
-        }
-        if (logStr != null) {
-            logStr = logStr + " : " + str;
-        } else {
-            logStr = str.toString();
-        }
-        log(currentLogLevel, logStr);
-    }
 
     private static void log(int currentLogLevel, String logStr) {
         log(currentLogLevel, logStr, null);
     }
 
     private static void log(int currentLogLevel, String logStr, Throwable tr) {
-        if (isLogFlag()) {
-            if (logLevel <= Log.VERBOSE) {
+        if (DEVELOP_MODE) {
+            if (currentLogLevel <= Log.VERBOSE) {
                 Log.v(tag, logStr);
-            } else if (logLevel <= Log.DEBUG) {
+            } else if (currentLogLevel <= Log.DEBUG) {
                 Log.d(tag, logStr);
-            } else if (logLevel <= Log.INFO) {
+            } else if (currentLogLevel <= Log.INFO) {
                 Log.i(tag, logStr);
-            } else if (logLevel <= Log.WARN) {
+            } else if (currentLogLevel <= Log.WARN) {
                 Log.w(tag, logStr);
-            } else if (logLevel <= Log.ERROR) {
+            } else if (currentLogLevel <= Log.ERROR) {
                 Log.e(tag, logStr, tr);
-            } else if (logLevel <= Log.ASSERT) {
+            } else if (currentLogLevel <= Log.ASSERT) {
                 Log.e(tag, logStr, tr);
             }
         }
@@ -238,7 +214,7 @@ public class SLog {
 
     private static void writeLog(String logStr) {
         if (null != logCacheFile) {
-            synchronized (mClassName) {
+            synchronized (LOG_SAVE_TIME_LENGTH) {
                 try {
                     ToolFile.write(logCacheFile, logStr + "\r\n", "UTF-8");
                 } catch (IOException e) {
@@ -294,7 +270,7 @@ public class SLog {
         if (null == fileList || fileList.length < 1) {
             return;
         }
-        synchronized (mClassName) {
+        synchronized (LOG_SAVE_TIME_LENGTH) {
             for (File file : fileList) {
                 String fileName = file.getName();
                 if (fileName.contains("_log")) {
