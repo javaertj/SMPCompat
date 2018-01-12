@@ -26,5 +26,4 @@ dependencies {
     compile rootProject.ext.dependencies.design
     compile rootProject.ext.dependencies.appCompat
     compile rootProject.ext.dependencies.recyclerView
-    compile project(':apicontrol')
 }
