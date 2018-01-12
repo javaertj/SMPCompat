@@ -17,9 +17,9 @@
 <resources>
 
     <declare-styleable name="recycler_swipe_SwipeMenuLayout">
-        <attr name="leftViewId" format="reference"/>
-        <attr name="rightViewId" format="reference"/>
-        <attr name="contentViewId" format="reference"/>
+        <attr name="recycler_swipe_leftViewId" format="reference"/>
+        <attr name="recycler_swipe_rightViewId" format="reference"/>
+        <attr name="recycler_swipe_contentViewId" format="reference"/>
     </declare-styleable>
 
 </resources>

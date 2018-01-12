@@ -22,7 +22,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
     private static final String TAG_TITLE = "title";
-    private boolean enableTitleClick;
 
     public OptionsPickerView(Context context, PickerControllerPosition position) {
         super(context);
@@ -38,10 +37,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         btnCancel.setOnClickListener(this);
         //顶部标题
         tvTitle = (TextView) findViewById(R.id.tvTitle);
-        if (enableTitleClick) {
-            tvTitle.setTag(TAG_TITLE);
-            tvTitle.setOnClickListener(this);
-        }
+        tvTitle.setTag(TAG_TITLE);
         // ----转轮
         final View optionspicker = findViewById(R.id.optionspicker);
         wheelOptions = new WheelOptions(optionspicker);
@@ -197,7 +193,11 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
 
     public OptionsPickerView<T> setEnableTitleClick(boolean enableTitleClick) {
-        this.enableTitleClick = enableTitleClick;
+        if (enableTitleClick) {
+            tvTitle.setOnClickListener(this);
+        }else {
+            tvTitle.setOnClickListener(null);
+        }
         return this;
     }
 }

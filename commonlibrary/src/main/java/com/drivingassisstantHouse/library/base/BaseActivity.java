@@ -38,6 +38,7 @@ import butterknife.ButterKnife;
  * @version 1.0
  */
 public abstract class BaseActivity extends AppCompatActivity implements IBaseActivity {
+    private final String TAG=getClass().getName();
     /***
      * 整个应用Applicaiton
      **/
@@ -84,7 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SLog.d("BaseActivity-->onCreate()");
+        SLog.d(TAG+"-->onCreate()");
         // 获取应用Application
         mApplication = (MApplication) getApplicationContext();
         // 将当前Activity压入栈
@@ -126,13 +127,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
     @Override
     protected void onRestart() {
         super.onRestart();
-        SLog.d("BaseActivity-->onRestart()");
+        SLog.d(TAG+"-->onRestart()");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        SLog.d("BaseActivity-->onStart()");
+        SLog.d(TAG+"-->onStart()");
     }
 
     @Override
@@ -151,7 +152,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
         super.onResume();
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart(getClass().getName());
-        SLog.d("BaseActivity-->onResume()");
+        SLog.d(TAG+"-->onResume()");
         resume();
     }
 
@@ -160,13 +161,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
         super.onPause();
         MobclickAgent.onPause(this);
         MobclickAgent.onPageEnd(getClass().getName());
-        SLog.d("BaseActivity-->onPause()");
+        SLog.d(TAG+"-->onPause()");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        SLog.d("BaseActivity-->onStop()");
+        SLog.d(TAG+"-->onStop()");
     }
 
     @Override
@@ -175,7 +176,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
         ButterKnife.unbind(this);
         super.onDestroy();
         mApplication.removeTask(context);
-        SLog.d("BaseActivity-->onDestroy()");
+        SLog.d(TAG+"-->onDestroy()");
     }
 
     /**
@@ -287,6 +288,11 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
 
     @Override
     public void onNetWorkChanged(boolean connected) {
+
+    }
+
+    @Override
+    public void handleMessage(Message msg) {
 
     }
 }

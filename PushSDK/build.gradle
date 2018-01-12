@@ -1,4 +1,8 @@
 apply plugin: rootProject.ext.plugins.library
+apply plugin: rootProject.ext.plugins.maven
+
+group = rootProject.ext.bintray.group
+
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion

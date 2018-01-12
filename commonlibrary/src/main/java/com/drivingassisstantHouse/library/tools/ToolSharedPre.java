@@ -135,6 +135,21 @@ public class ToolSharedPre {
     }
 
     /**
+     * 从指定的sp文件中查询指定的key是否存在
+     *
+     * @param fileName sp文件名称
+     * @param key      指定的key
+     * @return 如果存在则返回相应的布尔值，如果不存在key，则返回默认值
+     * @throws ClassCastException 若指定的key对应的不是boolean类型，则抛出异常
+     */
+    public boolean containsKeyInSp(String fileName, String key) throws ClassCastException {
+        boolean result = false;
+        if (isEmpty(fileName) || isEmpty(key))
+            return result;
+        return getSp(fileName).contains(key);
+    }
+
+    /**
      * 保存指定的long值对到sp中
      *
      * @param fileName sp文件名称

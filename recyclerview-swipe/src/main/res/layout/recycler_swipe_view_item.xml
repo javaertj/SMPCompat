@@ -20,9 +20,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    swipe:contentViewId="@+id/swipe_content"
-    swipe:leftViewId="@+id/swipe_left"
-    swipe:rightViewId="@+id/swipe_right">
+    swipe:recycler_swipe_contentViewId="@+id/swipe_content"
+    swipe:recycler_swipe_leftViewId="@+id/swipe_left"
+    swipe:recycler_swipe_rightViewId="@+id/swipe_right">
 
     <com.yanzhenjie.recyclerview.swipe.SwipeMenuView
         android:id="@id/swipe_left"

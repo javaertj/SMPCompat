@@ -43,14 +43,11 @@ public abstract class MApplication extends TinkerApplication {
     /**
      * 整个应用全局可访问数据集合
      **/
-    private static Map<String, Object> gloableData = new HashMap<String, Object>();
-
-
-
+    protected static Map<String, Object> gloableData = new HashMap<String, Object>();
     /***
      * 寄存整个应用Activity
      **/
-    private final Stack<WeakReference<Activity>> activitys = new Stack<WeakReference<Activity>>();
+    protected final Stack<WeakReference<Activity>> activitys = new Stack<WeakReference<Activity>>();
 
     public MApplication(){
         super(ShareConstants.TINKER_ENABLE_ALL);

@@ -27,7 +27,6 @@ import android.view.View;
 import android.view.View.MeasureSpec;
 
 import com.drivingassisstantHouse.library.config.SysEnv;
-import com.drivingassisstantHouse.library.jni.ImageBlur;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
@@ -51,61 +50,6 @@ import java.util.Random;
  * @version 1.0
  */
 public class ToolPicture {
-	
-	/**
-	 * 高斯模糊效果JNI实现
-	 * @param sentBitmap
-	 * @param radius
-	 * @param canReuseInBitmap
-	 * @return
-	 */
-	public static Bitmap doBlurJniArray(Bitmap sentBitmap, int radius, boolean canReuseInBitmap) {
-        Bitmap bitmap;
-        if (canReuseInBitmap) {
-            bitmap = sentBitmap;
-        } else {
-            bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
-        }
-
-        if (radius < 1) {
-            return (null);
-        }
-
-        int w = bitmap.getWidth();
-        int h = bitmap.getHeight();
-
-        int[] pix = new int[w * h];
-        bitmap.getPixels(pix, 0, w, 0, 0, w, h);
-        //Jni Pixels
-        ImageBlur.blurIntArray(pix, w, h, radius);
-
-        bitmap.setPixels(pix, 0, w, 0, 0, w, h);
-        return (bitmap);
-    }
-
-	/**
-	 * 高斯模糊效果JNI实现
-	 * @param sentBitmap
-	 * @param radius
-	 * @param canReuseInBitmap
-	 * @return
-	 */
-    public static Bitmap doBlurJniBitMap(Bitmap sentBitmap, int radius, boolean canReuseInBitmap) {
-        Bitmap bitmap;
-        if (canReuseInBitmap) {
-            bitmap = sentBitmap;
-        } else {
-            bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
-        }
-
-        if (radius < 1) {
-            return (null);
-        }
-        //Jni BitMap
-        ImageBlur.blurBitMap(bitmap, radius);
-
-        return (bitmap);
-    }
 
     /**
      * Java代码实现高斯模糊效果，效率差

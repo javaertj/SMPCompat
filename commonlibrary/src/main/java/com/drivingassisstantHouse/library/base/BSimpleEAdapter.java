@@ -112,6 +112,6 @@ public  abstract class BSimpleEAdapter<T> extends BaseAdapter {
 	}
 //可以把此类变成抽象类，让子类继承时在里面处理方法，不过使用接口更灵活，因为Activiy也可以实现interface
  	public abstract void covertView(SimpleAdapterHolder holder, int position,List<T> datas,
- 			Object obj);
+									T data);
 
 }

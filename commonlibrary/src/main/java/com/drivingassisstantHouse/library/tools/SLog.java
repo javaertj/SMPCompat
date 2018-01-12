@@ -17,7 +17,7 @@ public class SLog {
     private static boolean DEVELOP_MODE;
     private static String tag = "[AppName]";
     private static int logLevel = Log.DEBUG;//Log.ERROR
-    private static final String mClassName = "简途旅行";
+    private static String mClassName = "简途旅行";
     private static File logCacheDir;
     private static File logCacheFile;
     private static final long LOG_SAVE_TIME_LENGTH = new Date().getTime() - 5 * 24 * 60 * 60 * 1000L;
@@ -47,6 +47,14 @@ public class SLog {
     public static void init(boolean enableLog, String logCacheDirName) {
         init(enableLog);
         initCacheFile(logCacheDirName);
+    }
+
+    /**
+     * 设置tag名称
+     * @param logTag
+     */
+    public static void setLogTag(String logTag) {
+        mClassName = logTag;
     }
 
     /**
@@ -115,7 +123,7 @@ public class SLog {
      *
      * @param str
      */
-    public static void i(Object str) {
+    public static void i(String str) {
         log(Log.INFO, str);
     }
 
@@ -124,7 +132,7 @@ public class SLog {
      *
      * @param str
      */
-    public static void d(Object str) {
+    public static void d(String str) {
         log(Log.DEBUG, str);
     }
 
@@ -133,7 +141,7 @@ public class SLog {
      *
      * @param str
      */
-    public static void v(Object str) {
+    public static void v(String str) {
         log(Log.VERBOSE, str);
     }
 
@@ -142,7 +150,7 @@ public class SLog {
      *
      * @param str
      */
-    public static void w(Object str) {
+    public static void w(String str) {
         log(Log.WARN, str);
     }
 
@@ -151,17 +159,17 @@ public class SLog {
      *
      * @param str
      */
-    public static void e(Object str) {
+    public static void e(String str) {
         log(Log.ERROR, str);
     }
 
     /**
      * The Log Level:e
      *
-     * @param ex
+     * @param tr
      */
-    public static void e(Exception ex) {
-        log(Log.ERROR, "error", ex);
+    public static void e(Throwable tr) {
+        e("", tr);
     }
 
     /**
@@ -192,6 +200,9 @@ public class SLog {
 
     private static void log(int currentLogLevel, Object str) {
         String logStr = getFunctionName();
+        if (str instanceof Throwable){
+
+        }
         if (logStr != null) {
             logStr = logStr + " : " + str;
         } else {
@@ -242,7 +253,7 @@ public class SLog {
             return Log.getStackTraceString(error);
         }
 
-        return null;
+        return "";
     }
 
 

@@ -15,6 +15,7 @@ import android.graphics.Region;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -28,7 +29,7 @@ import java.lang.ref.WeakReference;
  * 创建者：yankebin
  * 日期：2015/12/15
  */
-public class RoundScanningImageView extends ImageView {
+public class RoundScanningImageView extends AppCompatImageView {
     private Paint mPaint;
     private int mHeight = 0;
     private Path mPath;

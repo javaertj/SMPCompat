@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -15,7 +17,7 @@ import com.drivingassisstantHouse.library.R;
  * 创建者：yankebin
  * 日期：2016/4/19
  */
-public class VerticalDotView extends ImageView {
+public class VerticalDotView extends AppCompatImageView {
     private int circleRadius;
     private int totalHeight;
     private Paint mPaint;

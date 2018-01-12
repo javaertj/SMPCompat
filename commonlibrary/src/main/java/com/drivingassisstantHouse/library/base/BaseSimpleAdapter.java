@@ -1,7 +1,5 @@
 package com.drivingassisstantHouse.library.base;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 
 import com.drivingassisstantHouse.library.tools.ViewUtils;
+
+import java.util.List;
 
 
 /**
@@ -110,7 +110,7 @@ public   class BaseSimpleAdapter<T> extends BaseAdapter {
 //			Object obj);
 	
 	public interface AdapterInter<T> {
-		public void covertView(SimpleAdapterHolder holder, int position,List<T> datas, Object obj);
+		public void covertView(SimpleAdapterHolder holder, int position,List<T> datas, T data);
 	}
 
 

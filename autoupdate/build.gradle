@@ -1,4 +1,7 @@
 apply plugin: rootProject.ext.plugins.library
+apply plugin: rootProject.ext.plugins.maven
+
+group = rootProject.ext.bintray.group
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -20,5 +23,8 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(path: ':apicontrol')
+    compile rootProject.ext.dependencies.design
+    compile rootProject.ext.dependencies.appCompat
+    compile rootProject.ext.dependencies.recyclerView
+    compile project(':apicontrol')
 }

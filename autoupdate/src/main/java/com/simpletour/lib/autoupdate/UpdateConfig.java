@@ -20,5 +20,4 @@ public final class UpdateConfig {
      */
     public static String APK_SAVE_NAME = "simpletour_update_supplier.apk";
 
-    public static final String URL_FOR_CHECK_UPDATE="home/msgBox";
 }

@@ -1,4 +1,7 @@
 apply plugin: rootProject.ext.plugins.library
+apply plugin: rootProject.ext.plugins.maven
+
+group = rootProject.ext.bintray.group
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -17,71 +20,88 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:design:25.3.1'
-    //rest+rxAndroid
+    compile rootProject.ext.dependencies.design
+    compile rootProject.ext.dependencies.supportMultidex
+
+    //rxAndroid
     compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.3.0'
     compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0'
     compile 'com.jakewharton.rxbinding:rxbinding-recyclerview-v7:0.3.0'
     compile 'com.jakewharton.rxbinding:rxbinding:1.0.1'
-    compile 'io.reactivex:rxandroid:1.2.1'
-    // Retrofit适配RxJava  2
-    compile 'com.squareup.retrofit2:retrofit:2.2.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.2.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
-    // Retrofit适配RxJava
-    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
-    // Retrofit Gson数据转换器
-    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
-    compile 'com.squareup.okhttp:logging-interceptor:2.6.0'
+
     //下拉刷新
     compile 'in.srain.cube:ultra-ptr:1.0.11'
+
     //ViewHelper
     compile 'com.nineoldandroids:library:2.4.0'
+
+    //photoview
     compile 'com.github.chrisbanes.photoview:library:1.2.4'
+
     //圆角
     compile 'com.makeramen:roundedimageview:2.2.1'
+
     //圆形图像
     compile 'de.hdodenhof:circleimageview:2.0.0'
+
     //上传图片
     compile 'com.upyun:upyun-android-sdk:2.0.4'
+
     //权限库
     compile 'com.lovedise:permissiongen:0.0.6'
+
     //图片选择器
     compile 'com.squareup.picasso:picasso:2.4.0'
 
+    //okhttp-urlconnection
     compile 'com.squareup.okhttp:okhttp-urlconnection:1.6.0'
+
     //bus
     compile 'com.mcxiaoke.xbus:bus:1.0.1'
+
     //sweetDialog
     compile 'cn.pedant.sweetalert:library:1.3'
-    //美洽
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
+
+    //imageloader
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
+    //tablayout
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.8@aar'
+
     //富文本查看器
     compile 'com.zzhoujay.richtext:richtext:2.3.7'
+
+    //FlycoDialog
     compile 'com.flyco.dialog:FlycoDialog_Lib:1.2.6@aar'
+
     //阻尼效果
     compile 'me.everything:overscroll-decor-android:1.0.1'
-    compile 'com.android.support:multidex:1.0.1'
+
     //进度条
     compile 'com.akexorcist:RoundCornerProgressBar:2.0.3'
+
     //标签
     compile 'com.github.kingideayou:tagcloudview:1.0.2'
+
     //热补丁修复框架tinker
-    compile("com.tencent.tinker:tinker-android-lib:1.7.7")
+    compile 'com.tencent.tinker:tinker-android-lib:1.7.7'
+
     //富文本显示text
     compile 'com.zzhoujay.richtext:richtext:2.3.7'
+
+    //growingio
     compile 'com.growingio.android:vds-android-agent:0.9.103@aar'
 
-    compile project(':PickerviewLib')
-    compile project(':recyclerview-swipe')
-    compile project(':baidumap')
-    compile project(':sharelibrary')
+    //标签2
+    compile 'co.lujun:androidtagview:1.0.6'
+
+    //butterknife
+    compile 'com.jakewharton:butterknife:7.0.1'
+
+    //图片选择器
+    compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.0'
+
     compile project(':PushSDK')
-    compile project(':adapter')
-    compile project(':simpletourimlibrary')
-    compile project(':autoupdate')
 }
 

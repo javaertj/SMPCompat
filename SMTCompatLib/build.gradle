@@ -21,6 +21,9 @@ android {
 
 dependencies {
     compile project(':commonlibrary')
+    compile project(':PickerviewLib')
+    compile project(':recyclerview-swipe')
+    compile project(':adapter')
 }
 
 //apply from: "https://github.com/yanzhenjie/bintray/blob/master/maven-auto.gradle?raw=true"

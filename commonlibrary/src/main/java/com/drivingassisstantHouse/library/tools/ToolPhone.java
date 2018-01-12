@@ -135,6 +135,29 @@ public class ToolPhone {
     }
 
     /**
+     * 使用该方式，非android原生系统短信应用也能拉起。
+     * 群发或单人短信；跳转至发送短信界面(自动设置接收方的号码)
+     * @param mContext
+     * @param strPhone 手机号码，若群发则以分号(;)隔开
+     * @param strMsgContext 短信内容
+     */
+    public static boolean toSendMutiMsgeActivity(Context mContext,String strPhone,String strMsgContext){
+        boolean isSuccess=true;
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.putExtra("address", strPhone);
+            intent.putExtra("sms_body", strMsgContext);
+            intent.setType("vnd.android-dir/mms-sms");
+            mContext.startActivity(intent);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            isSuccess=false;
+        }
+        return  isSuccess;
+    }
+
+    /**
      * 跳转至联系人选择界面
      *
      * @param mContext    上下文

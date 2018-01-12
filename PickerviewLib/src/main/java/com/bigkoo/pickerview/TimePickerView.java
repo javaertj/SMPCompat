@@ -28,7 +28,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private static final String TAG_CANCEL = "cancel";
     private static final String TAG_TITLE = "title";
     private OnTimeSelectListener timeSelectListener;
-    private boolean enableTitleClick;
 
     public TimePickerView(Context context, Type type,PickerControllerPosition position) {
         super(context);
@@ -44,10 +43,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         btnCancel.setOnClickListener(this);
         //顶部标题
         tvTitle = (TextView) findViewById(R.id.tvTitle);
-        if (enableTitleClick) {
-            tvTitle.setTag(TAG_TITLE);
-            tvTitle.setOnClickListener(this);
-        }
+        tvTitle.setTag(TAG_TITLE);
         // ----时间转轮
         final View timepickerview = findViewById(R.id.timepicker);
         wheelTime = new WheelTime(timepickerview, type);
@@ -196,7 +192,11 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     }
 
     public TimePickerView setEnableTitleClick(boolean enableTitleClick) {
-        this.enableTitleClick = enableTitleClick;
+        if (enableTitleClick) {
+            tvTitle.setOnClickListener(this);
+        }else {
+            tvTitle.setOnClickListener(null);
+        }
         return this;
     }
 }

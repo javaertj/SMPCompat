@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 
 import java.io.File;
@@ -194,6 +195,24 @@ public class UpdateUtil {
         context.startActivity(i);
     }
 
+    /**
+     * 7.0兼容，安装文件
+     * @param context
+     * @param apkpath
+     */
+    public static void installApk7(Context context, File apkpath) {
+        if (apkpath == null || !apkpath.exists()) {
+            return;
+        }
+        Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + ".provider", apkpath);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        // 由于没有在Activity环境下启动Activity,设置下面的标签
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //添加这一句表示对目标应用临时授权该Uri所代表的文件
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setDataAndType(uri, "application/vnd.android.package-archive");
+        context.startActivity(intent);
+    }
 
     /**
      * 生成对应位数的小数

@@ -3,11 +3,9 @@ package com.simpletour.lib.autoupdate;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 
-import com.simpletour.lib.apicontrol.RetrofitApi;
-import com.simpletour.lib.apicontrol.encrypt.SignUtil;
-import com.simpletour.lib.autoupdate.model.SResponseBean;
 import com.simpletour.lib.autoupdate.model.UpdateBean;
 import com.simpletour.lib.autoupdate.model.UpdateResponse;
 import com.simpletour.lib.autoupdate.utils.UpdateUtil;
@@ -18,7 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -50,6 +47,10 @@ public final class UpdateAgent {
      * 用户取消更新回调接口
      */
     private static UpdateCancelListener cancelListener;
+    /**
+     * 开始检测更新回调的接口
+     */
+    private static OnCheckUpdateStartCallback onCheckUpdateStartCallback;
     /**
      * 下载开关
      */
@@ -122,6 +123,15 @@ public final class UpdateAgent {
     }
 
     /**
+     * 设置检测更新回调接口
+     *
+     * @param onCheckUpdateStartCallback
+     */
+    public static void setOnCheckUpdateStartCallback(OnCheckUpdateStartCallback onCheckUpdateStartCallback) {
+        UpdateAgent.onCheckUpdateStartCallback = onCheckUpdateStartCallback;
+    }
+
+    /**
      * 用户取消更新
      *
      * @param isForceUpdate
@@ -167,8 +177,6 @@ public final class UpdateAgent {
             destroy();
             return;
         }
-        cacheFile = UpdateUtil.getOwnCacheDirectory(context.getApplicationContext(),
-                UpdateConfig.DOWN_LOAD_CACHE_DIR_NAME);
         checkUpdate(context.getApplicationContext());
     }
 
@@ -176,41 +184,34 @@ public final class UpdateAgent {
      * 检测更新
      */
     private static void checkUpdate(final Context context) {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("osType", "android");
-        SignUtil.doMd5Sign(UpdateConfig.URL_FOR_CHECK_UPDATE, false, map);
-        RetrofitApi.getInstance().create(IUpdate.class)
-                .checkUpdate(map)
-                .enqueue(new UCallback<SResponseBean<UpdateBean>>(null) {
-                    @Override
-                    public void success(SResponseBean<UpdateBean> bean) {
-                        if (bean.isAvailable()) {
-                            Log.d(TAG, "检测更新成功");
-                            UpdateBean updateBean = bean.getData();
-                            if (null == updateBean) {
-                                Log.d(TAG, "更新数据错误，更新终止！");
-                                destroy();
-                                return;
-                            }
-                            handleUpdate(context, updateBean.buildUpdateResponse());
-                        }
+        if (null != onCheckUpdateStartCallback) {
+            onCheckUpdateStartCallback.onCheckUpdateStart(new UCallback<UpdateBean>() {
+                @Override
+                public void onSuccess(UpdateBean updateBean) {
+                    Log.d(TAG, "检测更新成功");
+                    if (null == updateBean) {
+                        Log.d(TAG, "更新数据错误，更新终止！");
+                        destroy();
+                        return;
                     }
+                    handleUpdate(context, updateBean.buildUpdateResponse());
+                }
 
-                    @Override
-                    public void failure(String error) {
-                        Log.d(TAG, "检测更新失败");
-                        int updateStatus;
-                        if (UpdateUtil.isAvailable(context)) {
-                            updateStatus = UpdateStatus.Timeout;
-                        } else {
-                            updateStatus = UpdateStatus.NoneWifi;
-                        }
-                        if (null != updateListener) {
-                            updateListener.onUpdateReturned(updateStatus, null);
-                        }
+                @Override
+                public void onFailure(String errorMessage) {
+                    Log.d(TAG, "检测更新失败");
+                    int updateStatus;
+                    if (UpdateUtil.isAvailable(context)) {
+                        updateStatus = UpdateStatus.Timeout;
+                    } else {
+                        updateStatus = UpdateStatus.NoneWifi;
                     }
-                });
-
+                    if (null != updateListener) {
+                        updateListener.onUpdateReturned(updateStatus, null);
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -254,6 +255,8 @@ public final class UpdateAgent {
             destroy();
             return;
         }
+        cacheFile = UpdateUtil.getOwnCacheDirectory(context.getApplicationContext(),
+                UpdateConfig.DOWN_LOAD_CACHE_DIR_NAME);
         int updateStatus = UpdateStatus.No;
         if (response.isHasUpdate()) {
             updateStatus = UpdateStatus.Yes;
@@ -402,7 +405,11 @@ public final class UpdateAgent {
     protected static void installApk(Context context) {
         File file = new File(cacheFile, UpdateConfig.APK_SAVE_NAME);
         if (file.exists()) {
-            UpdateUtil.installApk(context.getApplicationContext(), file.getAbsolutePath());
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+                UpdateUtil.installApk7(context.getApplicationContext(), file);
+            } else {
+                UpdateUtil.installApk(context.getApplicationContext(), file.getAbsolutePath());
+            }
         }
         destroy();
     }
