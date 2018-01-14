@@ -184,7 +184,7 @@ public final class RetrofitApi {
      * @return 服务接口代理类
      * @throws IllegalStateException if {@link #init(RetrofitConfig)} method wasn't called before
      */
-    private synchronized <S> S create(@NonNull final Class<S> serviceClass) {
+    public synchronized <S> S create(@NonNull final Class<S> serviceClass) {
         checkConfiguration();
         clientBuilder.interceptors().clear();
         clientBuilder.interceptors().add(new Interceptor() {
