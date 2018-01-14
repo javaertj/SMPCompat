@@ -12,11 +12,11 @@ import retrofit2.Callback;
  * 日期：2017/5/22
  */
 
-public abstract class SCallback<H, T> implements Callback<T> {
+public abstract class SCallback<T> implements Callback<T> {
     protected boolean isCanceled;
-    protected ContextHolder<H> contextHolder;
+    protected ContextHolder<Object> contextHolder;
 
-    public SCallback(@NonNull H host) {
+    public SCallback(@NonNull Object host) {
         contextHolder = new ContextHolder<>(host);
     }
 

@@ -11,11 +11,11 @@ import rx.Subscriber;
  * 创建者：yankebin
  * 日期：2017/7/20
  */
-public abstract class SSubscriber<H, T> extends Subscriber<T> {
+public abstract class SSubscriber<T> extends Subscriber<T> {
     protected boolean isCanceled;
-    protected ContextHolder<H> contextHolder;
+    protected ContextHolder<Object> contextHolder;
 
-    public SSubscriber(@NonNull H host) {
+    public SSubscriber(@NonNull Object host) {
         contextHolder = new ContextHolder<>(host);
     }
 
