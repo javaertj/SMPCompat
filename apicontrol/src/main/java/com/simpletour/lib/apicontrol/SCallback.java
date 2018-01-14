@@ -1,5 +1,7 @@
 package com.simpletour.lib.apicontrol;
 
+import android.support.annotation.NonNull;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -10,9 +12,14 @@ import retrofit2.Callback;
  * 日期：2017/5/22
  */
 
-public abstract class SCallback<T> implements Callback<T> {
-    protected static final String TAG = SCallback.class.getName();
+public abstract class SCallback<H, T> implements Callback<T> {
     protected boolean isCanceled;
+    protected ContextHolder<H> contextHolder;
+
+    public SCallback(@NonNull H host) {
+        contextHolder = new ContextHolder<>(host);
+    }
+
     /**
      * 检测是否符合回调服务器返回数据的条件
      *
@@ -20,14 +27,11 @@ public abstract class SCallback<T> implements Callback<T> {
      * @return
      */
     protected boolean checkCanceled(Call call) {
-        return call.isCanceled();
+        return isCanceled || call.isCanceled() || !contextHolder.isAlive();
     }
 
-    public boolean isCanceled() {
-        return isCanceled;
-    }
 
-    public void cancel() {
+    private void cancel() {
         isCanceled = true;
     }
 

@@ -5,11 +5,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -22,10 +20,9 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Subscriber;
 
 /**
- * 包名：com.simpletour.supplier.retrofit2
+ * 包名：com.simpletour.lib.apicontrol
  * 描述：服务器api请求类
  * 创建者：yankebin
  * 日期：2017/2/23
@@ -38,106 +35,18 @@ public final class RetrofitApi {
     private static final String ERROR_NOT_INIT = "RetrofitApi must be init with configuration before using";
     private static final String ERROR_INIT_CONFIG_WITH_NULL = "RetrofitApi configuration can not be initialized with null";
 
-    private String token;
     private static RetrofitApi api;
     private OkHttpClient.Builder clientBuilder;
     private Retrofit.Builder builder;
-    private final LinkedHashMap<String, String> defaultHeaders = new LinkedHashMap<>();
+    private final Map<String, String> defaultHeaders = new ConcurrentHashMap<>();
     private RetrofitConfig configuration;
-    private HashMap<String, WeakReference<HashMap<String, Subscriber>>> rxCallCache = new HashMap<>();
-    private HashMap<String, WeakReference<HashMap<String, SCallback>>> callCache = new HashMap<>();
 
-
-    public synchronized void putRxCall(String key, Subscriber subscriber) {
-        if (!rxCallCache.containsKey(key) || null == rxCallCache.get(key)) {
-            HashMap<String, Subscriber> rxCallList = new HashMap<>();
-            rxCallList.put(subscriber.toString(), subscriber);
-            rxCallCache.put(key, new WeakReference<>(rxCallList));
-        } else if (null != rxCallCache.get(key)) {
-            WeakReference<HashMap<String, Subscriber>> listWeakReference = rxCallCache.get(key);
-            HashMap<String, Subscriber> rxCallList = listWeakReference.get();
-            if (null != rxCallList && !rxCallList.containsKey(subscriber.toString())) {
-                rxCallList.put(subscriber.toString(), subscriber);
-            }
-        }
-    }
-
-    public synchronized void deleteRxCall(String key) {
-        WeakReference<HashMap<String, Subscriber>> listWeakReference = rxCallCache.get(key);
-        if (null == listWeakReference) {
-            return;
-        }
-        HashMap<String, Subscriber> rxCallList = listWeakReference.get();
-        if (null == rxCallList) {
-            return;
-        }
-        for (Map.Entry<String, Subscriber> entry : rxCallList.entrySet()) {
-            if (entry.getValue().isUnsubscribed()) {
-                continue;
-            }
-            entry.getValue().unsubscribe();
-        }
-    }
-
-    public String getBaseUrl() {
-        checkConfiguration();
-        return configuration.baseUrl;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public synchronized void putCall(String key, SCallback call) {
-        if (!callCache.containsKey(key) || null == callCache.get(key)) {
-            HashMap<String, SCallback> callList = new HashMap<>();
-            callList.put(call.toString(), call);
-            callCache.put(key, new WeakReference<>(callList));
-        } else if (null != callCache.get(key)) {
-            WeakReference<HashMap<String, SCallback>> listWeakReference = callCache.get(key);
-            HashMap<String, SCallback> callList = listWeakReference.get();
-            if (null != callList && !callList.containsKey(call.toString())) {
-                callList.put(call.toString(), call);
-            }
-        }
-    }
-
-    public synchronized void deleteCall(String key) {
-        WeakReference<HashMap<String, SCallback>> listWeakReference = callCache.get(key);
-        if (null == listWeakReference) {
-            return;
-        }
-        HashMap<String, SCallback> callList = listWeakReference.get();
-        if (null == callList) {
-            return;
-        }
-        for (Map.Entry<String, SCallback> entry : callList.entrySet()) {
-            if (entry.getValue().isCanceled()) {
-                continue;
-            }
-            entry.getValue().cancel();
-        }
-    }
-
-    public synchronized void clear() {
-        defaultHeaders.clear();
-        for (Map.Entry<String, WeakReference<HashMap<String, Subscriber>>> entry : rxCallCache.entrySet()) {
-            deleteRxCall(entry.getKey());
-        }
-        rxCallCache.clear();
-        for (Map.Entry<String, WeakReference<HashMap<String, SCallback>>> entry : callCache.entrySet()) {
-            deleteCall(entry.getKey());
-        }
-        callCache.clear();
-    }
-
+    /**
+     * 销毁API服务
+     */
     public synchronized void destroy() {
-        clear();
-        token = null;
+        checkConfiguration();
+        defaultHeaders.clear();
         configuration = null;
         builder = null;
         if (null != clientBuilder) {
@@ -225,29 +134,40 @@ public final class RetrofitApi {
         }
     }
 
+
     /**
-     * 设置默认的headers,如果传入null，将清除所有默认headers
+     * 添加http header
      *
-     * @param headers 请求头
+     * @param key
+     * @param value
      */
-    public void setDefaultHeaders(Map<String, String> headers) {
-        if (null == headers) {
-            defaultHeaders.clear();
-            return;
-        }
+    public void addHeader(@NonNull String key, @NonNull String value) {
+        checkConfiguration();
         synchronized (defaultHeaders) {
-            for (Map.Entry<String, String> entry : headers.entrySet()) {
-                defaultHeaders.put(entry.getKey(), entry.getValue());
-            }
+            defaultHeaders.put(key, value);
         }
     }
+
+
+    /**
+     * 添加http header
+     *
+     * @param header
+     */
+    public void addHeader(@NonNull Map<String, String> header) {
+        checkConfiguration();
+        synchronized (defaultHeaders) {
+            defaultHeaders.putAll(header);
+        }
+    }
+
 
     /**
      * 更新服务端基础测试地址
      *
      * @param url 服务端url地址
      */
-    public void updateBaseUrl(String url) {
+    public void updateBaseUrl(@NonNull String url) {
         checkConfiguration();
         if (TextUtils.isEmpty(url)) {
             return;
@@ -260,13 +180,11 @@ public final class RetrofitApi {
      * 创建请求类
      *
      * @param serviceClass 服务接口
-     * @param extraHeaders 额外的请求头
      * @param <S>          服务接口代理类
      * @return 服务接口代理类
      * @throws IllegalStateException if {@link #init(RetrofitConfig)} method wasn't called before
      */
-    private synchronized <S> S create(final Class<S> serviceClass, final boolean needDefaultHeaders,
-                                      final HashMap<String, String> extraHeaders) {
+    private synchronized <S> S create(@NonNull final Class<S> serviceClass) {
         checkConfiguration();
         clientBuilder.interceptors().clear();
         clientBuilder.interceptors().add(new Interceptor() {
@@ -274,14 +192,8 @@ public final class RetrofitApi {
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
                 Request.Builder requestBuilder = original.newBuilder();
-                if (needDefaultHeaders && null != defaultHeaders && !defaultHeaders.isEmpty()) {
-                    RetrofitApi.this.addHeaders(requestBuilder, defaultHeaders);
-                }
-                if (null != extraHeaders && !extraHeaders.isEmpty()) {
-                    RetrofitApi.this.addHeaders(requestBuilder, extraHeaders);
-                }
+                loadHeaders(requestBuilder);
                 Request request = requestBuilder.build();
-
                 return chain.proceed(request);
             }
         });
@@ -295,103 +207,21 @@ public final class RetrofitApi {
      * 添加headers
      *
      * @param requestBuilder 请求拦截器builder
-     * @param headers        请求头集合
      */
-    private void addHeaders(final Request.Builder requestBuilder, final HashMap<String, String>
-            headers) {
-        Set<String> keys = headers.keySet();
-        for (String key : keys) {
-            String value = headers.get(key);
-            if (TextUtils.isEmpty(value)) {
-                continue;
+    private void loadHeaders(final Request.Builder requestBuilder) {
+        synchronized (defaultHeaders) {
+            if (defaultHeaders.isEmpty()) {
+                return;
             }
-            requestBuilder.addHeader(key, value);
+            Set<String> keys = defaultHeaders.keySet();
+            for (String key : keys) {
+                String value = defaultHeaders.get(key);
+                if (TextUtils.isEmpty(value)) {
+                    continue;
+                }
+                requestBuilder.addHeader(key, value);
+            }
         }
-    }
-
-    /**
-     * 不要任何请求头的服务类
-     *
-     * @param serviceClass 服务接口
-     * @param <S>          服务接口代理类
-     * @return 服务接口代理类
-     */
-    public <S> S createWithNothing(final Class<S> serviceClass) {
-        return create(serviceClass, false, null);
-    }
-
-    /**
-     * 只需要默认请求头的服务类
-     *
-     * @param serviceClass 服务接口
-     * @param <S>          服务接口代理类
-     * @return 服务接口代理类
-     */
-    public <S> S createWithDefaultHeaders(final Class<S> serviceClass) {
-        return create(serviceClass, true, null);
-    }
-
-    /**
-     * 只需要额外请求头的服务类
-     *
-     * @param serviceClass 服务接口
-     * @param extraHeaders 额外的请求头
-     * @param <S>          服务接口代理类
-     * @return 服务接口代理类
-     */
-    public <S> S createWidthExtraHeaders(final Class<S> serviceClass, final HashMap<String,
-            String> extraHeaders) {
-        return create(serviceClass, false, extraHeaders);
-    }
-
-    /**
-     * 默认请求头和额外请求头都需要的服务类
-     *
-     * @param serviceClass 服务接口
-     * @param extraHeaders 额外的请求头
-     * @param <S>          服务接口代理类
-     * @return 服务接口代理类
-     */
-    public <S> S createMixDefaultHeadersAndExtraHeaders(final Class<S> serviceClass,
-                                                        final HashMap<String, String> extraHeaders) {
-        return create(serviceClass, true, extraHeaders);
-    }
-
-    /**
-     * 创建不需要TOKEN的请求类
-     *
-     * @param serviceClass
-     * @param <S>
-     * @return
-     */
-    public <S> S create(Class<S> serviceClass) {
-        return create(serviceClass, null);
-    }
-
-    /**
-     * 创建自带TOKEN的请求类
-     *
-     * @param serviceClass
-     * @param <S>
-     * @return
-     */
-    public <S> S createWithToken(Class<S> serviceClass) {
-        return create(serviceClass, token);
-    }
-
-    /**
-     * 创建服务api类
-     *
-     * @param serviceClass
-     * @param value
-     * @param <S>
-     * @return
-     */
-    public <S> S create(Class<S> serviceClass, String value) {
-        HashMap<String, String> extraHeaders = new HashMap<>();
-        extraHeaders.put("AccessToken", value);
-
-        return createMixDefaultHeadersAndExtraHeaders(serviceClass, extraHeaders);
     }
 
     public static class RetrofitConfig {
