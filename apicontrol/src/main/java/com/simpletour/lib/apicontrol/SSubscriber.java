@@ -19,19 +19,6 @@ public abstract class SSubscriber<H, T> extends Subscriber<T> {
         contextHolder = new ContextHolder<>(host);
     }
 
-    @Override
-    public final void onNext(T baseBen) {
-        if (checkCanceled()) {
-            unsubscribe();
-            return;
-        }
-        if (null != baseBen) {
-            success(baseBen);
-        } else {
-            onError(new IllegalArgumentException("Invalid data returned by the server"));
-        }
-    }
-
     /**
      * 检测是否符合回调服务器返回数据的条件
      *
@@ -44,15 +31,6 @@ public abstract class SSubscriber<H, T> extends Subscriber<T> {
 
     private void cancel() {
         isCanceled = true;
-    }
-
-    @Override
-    public final void onError(Throwable e) {
-        if (checkCanceled()) {
-            unsubscribe();
-            return;
-        }
-        failure(e);
     }
 
     public abstract void success(T bean);
