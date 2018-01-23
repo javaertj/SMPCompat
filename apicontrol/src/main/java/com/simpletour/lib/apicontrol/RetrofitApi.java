@@ -70,7 +70,7 @@ public final class RetrofitApi {
 
     private RetrofitApi() {
         //每个请求的header里面加上设备类型信息
-        defaultHeaders.put("Req-Device", "Android");//
+        defaultHeaders.put("Req-Device", "Android");
     }
 
     /**
@@ -161,6 +161,45 @@ public final class RetrofitApi {
         }
     }
 
+    /**
+     * 删除header
+     *
+     * @param key
+     */
+    public void deleteHeader(@NonNull String key) {
+        checkConfiguration();
+        synchronized (defaultHeaders) {
+            defaultHeaders.remove(key);
+        }
+    }
+
+    /**
+     * 删除header
+     *
+     * @param header
+     */
+    public void deleteHeader(@NonNull Map<String, String> header) {
+        checkConfiguration();
+        synchronized (defaultHeaders) {
+            if (header.isEmpty()) {
+                return;
+            }
+            Set<String> keySet = header.keySet();
+            for (String key : keySet) {
+                defaultHeaders.remove(key);
+            }
+        }
+    }
+
+    /**
+     * 获取默认http请求头数据合集
+     *
+     * @return
+     */
+    public Map<String, String> getDefaultHeaders() {
+        checkConfiguration();
+        return defaultHeaders;
+    }
 
     /**
      * 更新服务端基础测试地址
@@ -179,12 +218,13 @@ public final class RetrofitApi {
     /**
      * 创建请求类
      *
-     * @param serviceClass 服务接口
-     * @param <S>          服务接口代理类
+     * @param serviceClass       服务接口
+     * @param <S>                服务接口代理类
+     * @param needDefaultHeaders 是否需要默认的headers
      * @return 服务接口代理类
      * @throws IllegalStateException if {@link #init(RetrofitConfig)} method wasn't called before
      */
-    public synchronized <S> S create(@NonNull final Class<S> serviceClass) {
+    public synchronized <S> S create(@NonNull final Class<S> serviceClass, final boolean needDefaultHeaders) {
         checkConfiguration();
         clientBuilder.interceptors().clear();
         clientBuilder.interceptors().add(new Interceptor() {
@@ -192,15 +232,29 @@ public final class RetrofitApi {
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
                 Request.Builder requestBuilder = original.newBuilder();
-                loadHeaders(requestBuilder);
+                if (needDefaultHeaders) {
+                    loadHeaders(requestBuilder);
+                } else {
+                    requestBuilder.addHeader("Req-Device", "Android");
+                }
                 Request request = requestBuilder.build();
                 return chain.proceed(request);
             }
         });
 
-        Retrofit retrofit = builder.client(clientBuilder.build()).build();
+        return builder.client(clientBuilder.build()).build().create(serviceClass);
+    }
 
-        return retrofit.create(serviceClass);
+    /**
+     * 创建请求类，默认会加载所有headers
+     *
+     * @param serviceClass 服务接口
+     * @param <S>          服务接口代理类
+     * @return 服务接口代理类
+     * @throws IllegalStateException if {@link #init(RetrofitConfig)} method wasn't called before
+     */
+    public synchronized <S> S create(@NonNull final Class<S> serviceClass) {
+        return create(serviceClass, true);
     }
 
     /**
