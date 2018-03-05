@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
@@ -66,6 +67,15 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
      */
     private float downY;
     /**
+     * 滑动开始时的x坐标
+     */
+    private float moveX;
+    /**
+     * 滑动开始时的y坐标
+     */
+    private float moveY;
+
+    /**
      * 菜单状态
      */
     private boolean isMenuOpen;
@@ -76,6 +86,7 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
     private float menuScale;
     private float contentScale;
     private float menuMove;
+    private int mPagingTouchSlop;
 
     /**
      * 重写SlidingLayout的构造函数
@@ -138,6 +149,8 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
         //删除ScrollView拉到尽头（顶部、底部、左侧、右侧），然后继续拉出现的阴影效果
         setOverScrollMode(OVER_SCROLL_NEVER);
         setClickable(true);
+        final ViewConfiguration conf = ViewConfiguration.get(getContext());
+        mPagingTouchSlop = conf.getScaledTouchSlop() * 2;
     }
 
     /**
@@ -320,14 +333,39 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
     }
 
     @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()){
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP:
+                moveX=moveY=0;
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                if (moveX != 0 || moveY != 0) {
+                    float offsetX = ev.getRawX() - moveX;
+                    float offsetY = ev.getRawY() - moveY;
+                    if (Math.abs(offsetX) < mPagingTouchSlop || Math.abs(offsetX) < Math.abs(offsetY)) {
+                        return super.onInterceptTouchEvent(ev)&&false;
+                    }
+                }
+                moveX = ev.getRawX();
+                moveY = ev.getRawY();
+                break;
+        }
+
+        return super.onInterceptTouchEvent(ev);
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
         switch (action) {
             case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
                 float scrollX = ev.getRawX() - downX;
                 float scrollY = ev.getRawY() - downY;
                 SLog.d("scrollX : " + scrollX + " scrollY : " + scrollY);
-                int slideWidth = menuWidth / BASE_SLIDE_BLOCK;
+                final int slideWidth = mPagingTouchSlop;
                 if (scrollX == 0 || scrollX == menuWidth) {
                     if (isMenuOpen) {
                         smoothScrollTo(0, 0);

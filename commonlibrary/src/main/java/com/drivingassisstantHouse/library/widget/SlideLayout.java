@@ -85,6 +85,14 @@ public class SlideLayout extends RelativeLayout implements SlideBase {
      * 记录手机抬起时的横坐标。
      */
     private float xUp;
+    /**
+     * 滑动开始时的x坐标
+     */
+    private float moveX;
+    /**
+     * 滑动开始时的y坐标
+     */
+    private float moveY;
 
     /**
      * 左侧布局当前是显示还是隐藏。只有完全显示或隐藏时才会更改此值，滑动过程中此值无效。
@@ -155,7 +163,7 @@ public class SlideLayout extends RelativeLayout implements SlideBase {
     public SlideLayout(Context context, AttributeSet attrs, int defaultStyle) {
         super(context, attrs, defaultStyle);
         density = getResources().getDisplayMetrics().density;
-        touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+        touchSlop = ViewConfiguration.get(context).getScaledTouchSlop()*2;
         setLayoutParams(new LayoutParams(-1, -1));
         initContainer();
     }
@@ -272,6 +280,30 @@ public class SlideLayout extends RelativeLayout implements SlideBase {
     }
 
     @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()){
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP:
+                moveX=moveY=0;
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                if (moveX != 0 || moveY != 0) {
+                    float offsetX = ev.getRawX() - moveX;
+                    float offsetY = ev.getRawY() - moveY;
+                    if (Math.abs(offsetX) < touchSlop || Math.abs(offsetX) < Math.abs(offsetY)) {
+                        return onTouchEvent(ev)&&false;
+                    }
+                }
+                moveX = ev.getRawX();
+                moveY = ev.getRawY();
+                break;
+        }
+
+        return super.onTouchEvent(ev);
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         createVelocityTracker(event);
         switch (event.getAction()) {
@@ -338,11 +370,6 @@ public class SlideLayout extends RelativeLayout implements SlideBase {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return onTouchEvent(ev);
     }
 
     /**
