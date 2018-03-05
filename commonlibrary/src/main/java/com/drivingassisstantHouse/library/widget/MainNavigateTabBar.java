@@ -36,6 +36,7 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
 
     private List<ViewHolder> mViewHolderList;
     private OnTabSelectedListener mTabSelectListener;
+    private OnFragmentInflateListener mFragmentInflateListener;
     private FragmentActivity mFragmentActivity;
     private String mCurrentTag;
     private String mRestoreTag;
@@ -335,6 +336,9 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
             if (TextUtils.equals(tag, holder.tag)) {
                 try {
                     fragment = (Fragment) Class.forName(holder.fragmentClass.getName()).newInstance();
+                    if (null != mFragmentInflateListener) {
+                        mFragmentInflateListener.onFragmentInflate(fragment, holder);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -522,6 +526,14 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
      */
     public void setTabSelectListener(OnTabSelectedListener tabSelectListener) {
         mTabSelectListener = tabSelectListener;
+    }
+
+    public interface OnFragmentInflateListener {
+        void onFragmentInflate(Fragment fragment, ViewHolder viewHolder);
+    }
+
+    public void setFragmentInflateListener(OnFragmentInflateListener fragmentInflateListener) {
+        this.mFragmentInflateListener = fragmentInflateListener;
     }
 
     /**
