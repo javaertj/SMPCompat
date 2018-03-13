@@ -17,6 +17,7 @@ import com.mcxiaoke.bus.annotation.BusReceiver;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Fragment基类
@@ -39,6 +40,8 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
      * 依附的Activity
      **/
     protected Activity mContext = null;
+
+    protected Unbinder unbinder;
 
     @Override
     public void onAttach(Activity activity) {
@@ -76,7 +79,7 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
                 mContextView = mView;
             }
             //使用butterKnife注解-fragment需要解绑
-            ButterKnife.bind(this, mContextView);
+            unbinder=ButterKnife.bind(this, mContextView);
             // 控件初始化
             initView(mContextView);
             // 实例化共通操作
@@ -85,7 +88,7 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
             doBusiness(mContext);
         } else {
             //使用butterKnife注解-fragment需要解绑
-            ButterKnife.bind(this, mContextView);
+           unbinder= ButterKnife.bind(this, mContextView);
         }
 
         return mContextView;
@@ -144,7 +147,9 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);//接除ButterKnife注解
+        if (null!=unbinder){
+            unbinder.unbind();
+        }
         if (mContextView != null && mContextView.getParent() != null) {
             ((ViewGroup) mContextView.getParent()).removeView(mContextView);
         }

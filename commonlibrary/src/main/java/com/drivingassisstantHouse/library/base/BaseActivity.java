@@ -29,6 +29,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -68,6 +69,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
 
     protected Toolbar toolbar;
 
+    protected Unbinder unbinder;
+
     protected static class BaseHandler extends Handler {
         private WeakReference<IBaseActivity> baseActivity;
 
@@ -105,7 +108,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
         mContextView = getLayoutInflater().inflate(bindLayout(), null, false);
         // 设置渲染视图View
         setContentView(mContextView);
-        ButterKnife.bind(this);//使用bufferKnife
+        unbinder=ButterKnife.bind(this);//使用bufferKnife
         initParms(bundle);
         // 初始化控件
 
@@ -173,7 +176,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
     @Override
     protected void onDestroy() {
         destroy();
-        ButterKnife.unbind(this);
+        if (null!=unbinder){
+            unbinder.unbind();
+        }
         super.onDestroy();
         mApplication.removeTask(context);
         SLog.d(TAG+"-->onDestroy()");

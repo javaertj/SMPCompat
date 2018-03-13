@@ -21,6 +21,7 @@ import com.umeng.analytics.MobclickAgent;
 import java.lang.ref.WeakReference;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * 基于V4Fragment基类(V4包)
@@ -53,6 +54,8 @@ public abstract class BaseFragmentV4 extends Fragment implements IBaseFragment {
      * onDestroyView方法执行的标识
      */
     protected boolean isDestroyView;
+
+    protected Unbinder unbinder;
 
     protected static class BaseHandler extends Handler {
         private WeakReference<IBaseFragment> baseFragment;
@@ -107,7 +110,7 @@ public abstract class BaseFragmentV4 extends Fragment implements IBaseFragment {
                 mContextView = mView;
             }
             //使用butterKnife注解-fragment需要解绑
-            ButterKnife.bind(this, mContextView);
+            unbinder=ButterKnife.bind(this, mContextView);
             // 控件初始化
             initView(mContextView);
             // 实例化共通操作
@@ -116,7 +119,7 @@ public abstract class BaseFragmentV4 extends Fragment implements IBaseFragment {
             doBusiness(mContext);
         } else {
             //使用butterKnife注解-fragment需要解绑
-            ButterKnife.bind(this, mContextView);
+            unbinder=ButterKnife.bind(this, mContextView);
         }
         return mContextView;
     }
@@ -181,7 +184,9 @@ public abstract class BaseFragmentV4 extends Fragment implements IBaseFragment {
     public void onDestroyView() {
         isDestroyView = true;
         super.onDestroyView();
-        ButterKnife.unbind(this);//接除ButterKnife注解
+        if (null!=unbinder){
+            unbinder.unbind();
+        }
         if (mContextView != null && mContextView.getParent() != null) {
             ((ViewGroup) mContextView.getParent()).removeView(mContextView);
         }
