@@ -87,6 +87,7 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
     private float contentScale;
     private float menuMove;
     private int mPagingTouchSlop;
+    private OnSlideScrollListener onSlideScrollListener;
 
     /**
      * 重写SlidingLayout的构造函数
@@ -330,14 +331,17 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
                 break;
         }
         ViewHelper.setAlpha(rightLayout, contentAlpha + (1 - contentAlpha) * (1 - scale));
+        if (null != onSlideScrollListener) {
+            onSlideScrollListener.onScrollChanged(l, t, oldl, oldt);
+        }
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()){
+        switch (ev.getAction()) {
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
-                moveX=moveY=0;
+                moveX = moveY = 0;
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -345,7 +349,7 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
                     float offsetX = ev.getRawX() - moveX;
                     float offsetY = ev.getRawY() - moveY;
                     if (Math.abs(offsetX) < mPagingTouchSlop || Math.abs(offsetX) < Math.abs(offsetY)) {
-                        return super.onInterceptTouchEvent(ev)&&false;
+                        return super.onInterceptTouchEvent(ev) && false;
                     }
                 }
                 moveX = ev.getRawX();
@@ -462,5 +466,9 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
         } else {
             openMenu();
         }
+    }
+
+    public void setOnSlideScrollListener(OnSlideScrollListener onSlideScrollListener) {
+        this.onSlideScrollListener = onSlideScrollListener;
     }
 }

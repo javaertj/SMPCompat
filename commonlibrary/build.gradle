@@ -97,7 +97,7 @@ dependencies {
     compile 'co.lujun:androidtagview:1.0.6'
 
     //butterknife
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.jakewharton:butterknife:8.8.1'
 
     //图片选择器
     compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.0'
