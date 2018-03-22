@@ -22,86 +22,62 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile rootProject.ext.dependencies.design
     compile rootProject.ext.dependencies.supportMultidex
-
     //rxAndroid
-    compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.3.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-recyclerview-v7:0.3.0'
-    compile 'com.jakewharton.rxbinding:rxbinding:1.0.1'
+    compile rootProject.ext.dependencies.RxBinding
+    compile rootProject.ext.dependencies.RxBindingSupportV4
+    compile rootProject.ext.dependencies.RxBindingAppcompatV7
+    compile rootProject.ext.dependencies.RxBindingRecycleViewV7
+    compile rootProject.ext.dependencies.RxBindingDesign
+    compile rootProject.ext.dependencies.RxBindingLeanBackv17
 
     //下拉刷新
-    compile 'in.srain.cube:ultra-ptr:1.0.11'
-
+    compile rootProject.ext.dependencies.ultraptr
     //ViewHelper
-    compile 'com.nineoldandroids:library:2.4.0'
-
+    compile rootProject.ext.dependencies.nineoldandroids
     //photoview
-    compile 'com.github.chrisbanes.photoview:library:1.2.4'
-
+    compile rootProject.ext.dependencies.photoview
     //圆角
-    compile 'com.makeramen:roundedimageview:2.2.1'
-
+    compile rootProject.ext.dependencies.roundedimageview
     //圆形图像
-    compile 'de.hdodenhof:circleimageview:2.0.0'
-
+    compile rootProject.ext.dependencies.circleimageview
     //上传图片
-    compile 'com.upyun:upyun-android-sdk:2.0.4'
-
+    compile rootProject.ext.dependencies.upyun
     //权限库
-    compile 'com.lovedise:permissiongen:0.0.6'
-
+    compile rootProject.ext.dependencies.permissiongen
     //图片选择器
-    compile 'com.squareup.picasso:picasso:2.4.0'
-
+    compile rootProject.ext.dependencies.picasso
     //okhttp-urlconnection
-    compile 'com.squareup.okhttp:okhttp-urlconnection:1.6.0'
-
+    compile rootProject.ext.dependencies.okhttpUrlconnection
     //bus
-    compile 'com.mcxiaoke.xbus:bus:1.0.1'
-
+    compile rootProject.ext.dependencies.xbus
     //sweetDialog
-    compile 'cn.pedant.sweetalert:library:1.3'
-    compile 'com.squareup.okhttp3:okhttp:3.9.0'
-
+    compile  rootProject.ext.dependencies.sweetalert
+    //okhttp
+    compile  rootProject.ext.dependencies.okhttp3
     //imageloader
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-
+    compile rootProject.ext.dependencies.imageloader
     //tablayout
-    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.8@aar'
-
+    compile rootProject.ext.dependencies.tablayout
     //富文本查看器
-    compile 'com.zzhoujay.richtext:richtext:2.3.7'
-
+    compile rootProject.ext.dependencies.richtext
     //FlycoDialog
-    compile 'com.flyco.dialog:FlycoDialog_Lib:1.2.6@aar'
-
+    compile rootProject.ext.dependencies.FlycoDialog
     //阻尼效果
-    compile 'me.everything:overscroll-decor-android:1.0.1'
-
+    compile rootProject.ext.dependencies.overscroll
     //进度条
-    compile 'com.akexorcist:RoundCornerProgressBar:2.0.3'
-
+    compile rootProject.ext.dependencies.RoundCornerProgressBar
     //标签
-    compile 'com.github.kingideayou:tagcloudview:1.0.2'
-
+    compile rootProject.ext.dependencies.tagcloudview
     //热补丁修复框架tinker
-    compile 'com.tencent.tinker:tinker-android-lib:1.7.7'
-
-    //富文本显示text
-    compile 'com.zzhoujay.richtext:richtext:2.3.7'
-
+    compile rootProject.ext.dependencies.tinker
     //growingio
-    compile 'com.growingio.android:vds-android-agent:0.9.103@aar'
-
+    compile rootProject.ext.dependencies.growingio
     //标签2
-    compile 'co.lujun:androidtagview:1.0.6'
-
+    compile rootProject.ext.dependencies.androidtagview
     //butterknife
-    compile 'com.jakewharton:butterknife:8.8.1'
-
+    compile rootProject.ext.dependencies.butterknife
     //图片选择器
-    compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.0'
-
+    compile rootProject.ext.dependencies.PictureSelector
     compile project(':PushSDK')
 }
 
