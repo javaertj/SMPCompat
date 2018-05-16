@@ -78,4 +78,13 @@ public final class PageCache {
     public LinkedList<WeakReference<Activity>> getCachedPages() {
         return CACHED_PAGES;
     }
+
+    public static WeakReference<Activity> pop() {
+        synchronized (CACHED_PAGES) {
+            if (CACHED_PAGES.isEmpty()) {
+                return null;
+            }
+            return CACHED_PAGES.peekFirst();
+        }
+    }
 }
