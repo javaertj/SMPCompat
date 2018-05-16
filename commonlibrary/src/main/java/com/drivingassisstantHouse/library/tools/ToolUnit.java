@@ -2,7 +2,6 @@ package com.drivingassisstantHouse.library.tools;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
 import com.drivingassisstantHouse.library.config.SysEnv;
@@ -59,9 +58,8 @@ public class ToolUnit {
 		
 		return TypedValue.applyDimension(unit, size, r.getDisplayMetrics());
 	}
-	
-	/**设备显示材质**/
-	private static DisplayMetrics mDisplayMetrics = SysEnv.getDisplayMetrics();
+
+
 	
 	/**
 	 * sp转换px
@@ -69,7 +67,7 @@ public class ToolUnit {
 	 * @return px数值
 	 */
 	public static int spTopx(float spValue) {
-        return (int) (spValue * mDisplayMetrics.scaledDensity + 0.5f);
+        return (int) (spValue * SysEnv.displayMetrics.scaledDensity + 0.5f);
     }
 
 	/**
@@ -78,7 +76,7 @@ public class ToolUnit {
 	 * @return sp数值
 	 */
     public static int pxTosp(float pxValue) {
-        return (int) (pxValue / mDisplayMetrics.scaledDensity + 0.5f);
+        return (int) (pxValue / SysEnv.displayMetrics.scaledDensity + 0.5f);
     }
 
 	/**
@@ -87,7 +85,7 @@ public class ToolUnit {
 	 * @return px数值
 	 */
     public static int dipTopx(float dipValue) {
-        return (int) (dipValue * mDisplayMetrics.density + 0.5f);
+        return (int) (dipValue * SysEnv.displayMetrics.density + 0.5f);
     }
 
 	/**
@@ -96,7 +94,7 @@ public class ToolUnit {
 	 * @return px数值
 	 */
 	public static float dipTopx2(float dipValue) {
-		return   (dipValue * mDisplayMetrics.density + 0.5f);
+		return   (dipValue * SysEnv.displayMetrics.density + 0.5f);
 	}
 
 	/**
@@ -105,6 +103,6 @@ public class ToolUnit {
 	 * @return dip数值
 	 */
     public static int pxTodip(float pxValue) {
-        return (int) (pxValue / mDisplayMetrics.density + 0.5f);
+        return (int) (pxValue / SysEnv.displayMetrics.density + 0.5f);
     }
 }

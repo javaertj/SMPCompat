@@ -27,15 +27,10 @@ import butterknife.Unbinder;
  */
 @SuppressLint("NewApi")
 public abstract class BaseFragment extends Fragment implements IBaseFragment {
-
     /**
      * 当前Fragment渲染的视图View
      **/
     private View mContextView = null;
-    /**
-     * 共通操作
-     **/
-    protected Operation mOperation = null;
     /**
      * 依附的Activity
      **/
@@ -69,9 +64,6 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
         SLog.d("BaseFragment-->onCreateView()");
         // 渲染视图View
         if (null == mContextView) {
-            //初始化参数
-            initParms(getArguments());
-
             View mView = bindView();
             if (null == mView) {
                 mContextView = inflater.inflate(bindLayout(), container, false);
@@ -80,10 +72,10 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
             }
             //使用butterKnife注解-fragment需要解绑
             unbinder=ButterKnife.bind(this, mContextView);
+            //初始化参数
+            initParms(getArguments());
             // 控件初始化
             initView(mContextView);
-            // 实例化共通操作
-            mOperation = new Operation(getActivity());
             // 业务处理
             doBusiness(mContext);
         } else {
@@ -162,13 +154,6 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
      */
     protected Activity getAttachActivity() {
         return getActivity();
-    }
-
-    /**
-     * 获取共通操作机能
-     */
-    public Operation getOperation() {
-        return this.mOperation;
     }
 
     @BusReceiver

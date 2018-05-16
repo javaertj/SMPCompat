@@ -1,11 +1,10 @@
 package com.drivingassisstantHouse.library.tools;
 
-import java.lang.reflect.Field;
-
-import android.content.Context;
 import android.util.Log;
 
-import com.drivingassisstantHouse.library.MApplication;
+import com.drivingassisstantHouse.library.config.SysEnv;
+
+import java.lang.reflect.Field;
 
 
 /**
@@ -15,8 +14,6 @@ import com.drivingassisstantHouse.library.MApplication;
  */
 public class ToolResource {
 	private static final String TAG = ToolResource.class.getName();
-
-	private static Context mContext = MApplication.gainContext();
 
 	private static Class<?> CDrawable = null;
 
@@ -34,13 +31,13 @@ public class ToolResource {
 	
 	static{
 		try{
-			CDrawable = Class.forName(mContext.getPackageName() + ".R$drawable");
-			CLayout = Class.forName(mContext.getPackageName() + ".R$layout");
-			CId = Class.forName(mContext.getPackageName() + ".R$id");
-			CAnim = Class.forName(mContext.getPackageName() + ".R$anim");
-			CStyle = Class.forName(mContext.getPackageName() + ".R$style");
-			CString = Class.forName(mContext.getPackageName() + ".R$string");
-			CArray = Class.forName(mContext.getPackageName() + ".R$array");
+			CDrawable = Class.forName(SysEnv.context.getPackageName() + ".R$drawable");
+			CLayout = Class.forName(SysEnv.context.getPackageName() + ".R$layout");
+			CId = Class.forName(SysEnv.context.getPackageName() + ".R$id");
+			CAnim = Class.forName(SysEnv.context.getPackageName() + ".R$anim");
+			CStyle = Class.forName(SysEnv.context.getPackageName() + ".R$style");
+			CString = Class.forName(SysEnv.context.getPackageName() + ".R$string");
+			CArray = Class.forName(SysEnv.context.getPackageName() + ".R$array");
 
 		}catch(ClassNotFoundException e){
 			Log.i(TAG,e.getMessage());
@@ -78,7 +75,7 @@ public class ToolResource {
 	private static int getResId(Class<?> resClass,String resName){
 		if(resClass == null){
 			Log.i(TAG,"getRes(null," + resName + ")");
-			throw new IllegalArgumentException("ResClass is not initialized. Please make sure you have added neccessary resources. Also make sure you have " + mContext.getPackageName() + ".R$* configured in obfuscation. field=" + resName);
+			throw new IllegalArgumentException("ResClass is not initialized. Please make sure you have added neccessary resources. Also make sure you have " + SysEnv.context.getPackageName() + ".R$* configured in obfuscation. field=" + resName);
 		}
 
 		try {

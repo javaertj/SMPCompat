@@ -24,7 +24,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
-import com.drivingassisstantHouse.library.MApplication;
+import com.drivingassisstantHouse.library.config.SysEnv;
 import com.drivingassisstantHouse.library.data.message.NotificationMessage;
 import com.drivingassisstantHouse.library.widget.ProgressDialog;
 
@@ -45,7 +45,6 @@ public class ToolAlert {
 	 * @param message 消息
 	 */
 	public static void loading(Context context, String message){
-		
 		loading(context,message,true);
 	}
 	
@@ -55,7 +54,6 @@ public class ToolAlert {
 	 * @param message 消息
 	 */
 	public static void loading(Context context, String message,final ILoadingOnKeyListener listener){
-		
 		loading(context, message, true, listener);
 	}
 	
@@ -66,7 +64,6 @@ public class ToolAlert {
 	 * @param cancelable 是否可以取消
 	 */
 	public static void loading(Context context, String message,boolean cancelable){
-		
 		if (mProgressDialog == null) {
 			mProgressDialog = new ProgressDialog(context,message);
 			mProgressDialog.setCancelable(cancelable);
@@ -81,7 +78,6 @@ public class ToolAlert {
 	 * @param message 消息
 	 */
 	public static void loading(Context context, String message,boolean cancelable ,final ILoadingOnKeyListener listener){
-		
 		if(mProgressDialog == null){
 			mProgressDialog = new ProgressDialog(context,message);
 			mProgressDialog.setCancelable(cancelable);
@@ -116,7 +112,6 @@ public class ToolAlert {
 	 * @return 是否
 	 */
 	public static boolean isLoading(){
-		
 		if(null != mProgressDialog){
 			return mProgressDialog.isShowing();
 		}else{
@@ -140,7 +135,6 @@ public class ToolAlert {
 	 */
 	public static void updateProgressText(String message){
 		if(mProgressDialog == null ) return ;
-		
 		if(mProgressDialog.isShowing()){
 			mProgressDialog.setMessage(message);
 		}
@@ -273,7 +267,7 @@ public class ToolAlert {
      * @param msg 消息内容
      */
     public static void toastShort(String msg) {
-        Toast.makeText(MApplication.gainContext(), msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(SysEnv.context, msg, Toast.LENGTH_SHORT).show();
     }
     
     /**
@@ -289,7 +283,7 @@ public class ToolAlert {
      * @param msg 消息内容
      */
     public static void toastLong(String msg) {
-        Toast.makeText(MApplication.gainContext(), msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(SysEnv.context, msg, Toast.LENGTH_LONG).show();
     }
     
     /**
@@ -305,7 +299,7 @@ public class ToolAlert {
      * @param msg 消息内容
      */
     public static void toast(String msg,int duration) {
-        Toast.makeText(MApplication.gainContext(), msg, duration).show();
+        Toast.makeText(SysEnv.context, msg, duration).show();
     }
     
     /**

@@ -14,7 +14,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.drivingassisstantHouse.library.MApplication;
+import com.drivingassisstantHouse.library.config.SysEnv;
 
 
 /**
@@ -71,7 +71,7 @@ public class ToolToast {
 	 * @param msg 要显示的信息
 	 */
 	public static void showLong(String msg){
-		buildToast(MApplication.gainContext(),msg,Toast.LENGTH_LONG).show();
+		buildToast(SysEnv.context,msg,Toast.LENGTH_LONG).show();
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class ToolToast {
 	 * @param msgRes 要显示的信息
 	 */
 	public static void showLong(int msgRes){
-		showLong(MApplication.gainContext().getString(msgRes));
+		showLong(SysEnv.context.getString(msgRes));
 	}
 	/**
 	 * 弹出较短时间提示信息
@@ -104,7 +104,7 @@ public class ToolToast {
 	 * @param msg 要显示的信息
 	 */
 	public static void showShort(String msg){
-		buildToast(MApplication.gainContext(),msg,Toast.LENGTH_SHORT).show();
+		buildToast(SysEnv.context,msg,Toast.LENGTH_SHORT).show();
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class ToolToast {
 	 * @param msgRes 要显示的信息
 	 */
 	public static void showShort(int msgRes){
-		showShort(MApplication.gainContext().getString(msgRes));
+		showShort(SysEnv.context.getString(msgRes));
 	}
 
 	/**

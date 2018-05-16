@@ -36,10 +36,6 @@ public abstract class BaseFragmentV4 extends Fragment implements IBaseFragment {
      **/
     protected View mContextView = null;
     /**
-     * 共通操作
-     **/
-    protected Operation mOperation = null;
-    /**
      * 依附的Activity
      **/
     protected AppCompatActivity mContext = null;
@@ -100,9 +96,6 @@ public abstract class BaseFragmentV4 extends Fragment implements IBaseFragment {
         mInflater = inflater;
         // 渲染视图View
         if (null == mContextView) {
-            //初始化参数
-            initParms(getArguments());
-
             View mView = bindView();
             if (null == mView) {
                 mContextView = inflater.inflate(bindLayout(), container, false);
@@ -111,10 +104,10 @@ public abstract class BaseFragmentV4 extends Fragment implements IBaseFragment {
             }
             //使用butterKnife注解-fragment需要解绑
             unbinder=ButterKnife.bind(this, mContextView);
+            //初始化参数
+            initParms(getArguments());
             // 控件初始化
             initView(mContextView);
-            // 实例化共通操作
-            mOperation = new Operation(getActivity());
             // 业务处理
             doBusiness(mContext);
         } else {
@@ -175,7 +168,6 @@ public abstract class BaseFragmentV4 extends Fragment implements IBaseFragment {
         mContext = null;
         mContextView = null;
         baseHandler = null;
-        mOperation = null;
         mInflater = null;
         super.onDetach();
     }
@@ -201,12 +193,6 @@ public abstract class BaseFragmentV4 extends Fragment implements IBaseFragment {
         return getActivity();
     }
 
-    /**
-     * 获取共通操作机能
-     */
-    public Operation getOperation() {
-        return this.mOperation;
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

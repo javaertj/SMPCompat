@@ -1,6 +1,5 @@
 package com.drivingassisstantHouse.library.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,9 +15,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.drivingassisstantHouse.library.MApplication;
 import com.drivingassisstantHouse.library.R;
 import com.drivingassisstantHouse.library.data.OnNetWorkEvent;
+import com.drivingassisstantHouse.library.tools.PageCache;
 import com.drivingassisstantHouse.library.tools.SLog;
 import com.mcxiaoke.bus.annotation.BusReceiver;
 import com.umeng.analytics.MobclickAgent;
@@ -40,14 +39,6 @@ import butterknife.Unbinder;
  */
 public abstract class BaseActivity extends AppCompatActivity implements IBaseActivity {
     private final String TAG=getClass().getName();
-    /***
-     * 整个应用Applicaiton
-     **/
-    private MApplication mApplication = null;
-    /**
-     * 当前Activity的弱引用，防止内存泄露
-     **/
-    private WeakReference<Activity> context = null;
     /**
      * 当前Activity渲染的视图View
      **/
@@ -89,11 +80,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SLog.d(TAG+"-->onCreate()");
-        // 获取应用Application
-        mApplication = (MApplication) getApplicationContext();
         // 将当前Activity压入栈
-        context = new WeakReference<Activity>(this);
-        mApplication.pushTask(context);
+        PageCache.put(this);
 
         // 实例化共通操作
         mOperation = new Operation(this);
@@ -118,7 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
         doBusiness(this);
 
         // 显示VoerFlowMenu
-        displayOverflowMenu(getContext());
+        displayOverflowMenu(this);
 
         // 是否可以截屏
         if (!isCanScreenshot) {
@@ -180,7 +168,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
             unbinder.unbind();
         }
         super.onDestroy();
-        mApplication.removeTask(context);
+        PageCache.remove(this);
         SLog.d(TAG+"-->onDestroy()");
     }
 
@@ -222,25 +210,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
     }
 
     /**
-     * 获取当前Activity
-     *
-     * @return
-     */
-    protected Activity getContext() {
-        if (null != context)
-            return context.get();
-        else
-            return null;
-    }
-
-    /**
-     * 获取共通操作机能
-     */
-    public Operation getOperation() {
-        return this.mOperation;
-    }
-
-    /**
      * 设置是否可截屏
      *
      * @param isCanScreenshot
@@ -271,14 +240,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
         super.finish();
         switch (mAnimationType) {
             case IBaseActivity.LEFT_RIGHT:
-//                overridePendingTransition(0, BaseView.gainResId(mApplication, BaseView.ANIM, "base_slide_right_out"));
                 overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
                 break;
             case IBaseActivity.TOP_BOTTOM:
-                overridePendingTransition(0, BaseView.gainResId(mApplication, BaseView.ANIM, "base_push_up_out"));
+                overridePendingTransition(0, BaseView.gainResId(this, BaseView.ANIM, "base_push_up_out"));
                 break;
             case IBaseActivity.FADE_IN_OUT:
-                overridePendingTransition(0, BaseView.gainResId(mApplication, BaseView.ANIM, "base_fade_out"));
+                overridePendingTransition(0, BaseView.gainResId(this, BaseView.ANIM, "base_fade_out"));
                 break;
             default:
                 break;

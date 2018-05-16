@@ -120,7 +120,8 @@ ext {
             //标签
             tagcloudview          : 'com.github.kingideayou:tagcloudview:1.0.2',
             //热补丁修复框架tinker
-            tinker                : 'com.tencent.tinker:tinker-android-lib:1.7.7',
+            tinker                : 'com.tencent.tinker:tinker-android-lib:1.9.1',
+            tinkerAnno                : 'com.tencent.tinker:tinker-android-anno:1.9.1',
             //growingio
             growingio             : 'com.growingio.android:vds-android-agent:0.9.103@aar',
             //标签2
