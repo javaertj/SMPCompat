@@ -36,6 +36,9 @@
         <attr name="menu_alpha_coefficient" format="float" />
         <!-- 内容透明的比例-->
         <attr name="content_alpha_coefficient" format="float" />
+        <!-- 触摸内容区域关闭菜单的开关-->
+        <attr name="close_menu_when_touch_content" format="boolean" />
+
     </declare-styleable>
 
     <declare-styleable name="RoundScanningImageView">

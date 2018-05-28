@@ -97,7 +97,7 @@ public class SlideLayout extends RelativeLayout implements SlideBase {
     /**
      * 左侧布局当前是显示还是隐藏。只有完全显示或隐藏时才会更改此值，滑动过程中此值无效。
      */
-    private boolean isMenuVisible;
+    private boolean menuOpen;
 
     /**
      * 是否正在滑动。
@@ -388,7 +388,7 @@ public class SlideLayout extends RelativeLayout implements SlideBase {
      * @param moveDistanceY 纵向移动的距离
      */
     private void checkSlideState(int moveDistanceX, int moveDistanceY) {
-        if (isMenuVisible) {
+        if (menuOpen) {
             if (!isSliding && Math.abs(moveDistanceX) >= touchSlop && moveDistanceX < 0) {
                 isSliding = true;
                 slideState = SlideBase.HIDE_MENU;
@@ -495,8 +495,9 @@ public class SlideLayout extends RelativeLayout implements SlideBase {
      *
      * @return 左侧布局完全显示返回true，完全隐藏返回false。
      */
-    public boolean isMenuVisible() {
-        return isMenuVisible;
+    @Override
+    public boolean isMenuOpen() {
+        return menuOpen;
     }
 
     /**
@@ -576,9 +577,9 @@ public class SlideLayout extends RelativeLayout implements SlideBase {
      */
     private void onChangeState(float speed) {
         if (speed > 0) {
-            isMenuVisible = false;
+            menuOpen = false;
         } else {
-            isMenuVisible = true;
+            menuOpen = true;
         }
         isSliding = false;
     }
@@ -603,7 +604,7 @@ public class SlideLayout extends RelativeLayout implements SlideBase {
      * 切换菜单状态
      */
     public void toggle() {
-        if (isMenuVisible()) {
+        if (isMenuOpen()) {
             smoothShowContent();
         } else {
             smoothShowMenu();

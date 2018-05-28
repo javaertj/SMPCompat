@@ -98,4 +98,10 @@ public interface SlideBase
      */
     void onLayoutInit();
 
+    /**
+     * 菜单是否打开
+     * @return
+     */
+    boolean isMenuOpen();
+
 }

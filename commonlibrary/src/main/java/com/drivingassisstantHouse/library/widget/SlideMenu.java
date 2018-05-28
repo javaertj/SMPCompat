@@ -78,7 +78,12 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
     /**
      * 菜单状态
      */
-    private boolean isMenuOpen;
+    private boolean menuOpen;
+
+    /**
+     * 触摸内容区域关闭菜单
+     */
+    private boolean enableCloseMenuWhenTouchContent;
 
     private boolean slideMenuContent;
     private float menuAlpha;
@@ -128,6 +133,7 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
         menuScale = typedArray.getFloat(R.styleable.SlideMenu_menu_scale_coefficient, 0.3f);
         contentScale = typedArray.getFloat(R.styleable.SlideMenu_content_scale_coefficient, 0.8f);
         menuMove = typedArray.getFloat(R.styleable.SlideMenu_menu_content_move_coefficient, 0.3f);
+        enableCloseMenuWhenTouchContent = typedArray.getBoolean(R.styleable.SlideMenu_close_menu_when_touch_content, true);
         typedArray.recycle();
         initContainer();
     }
@@ -186,6 +192,10 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
         bgLayout.addView(view, 0);
     }
 
+    public void setEnableCloseMenuWhenTouchContent(boolean enableCloseMenuWhenTouchContent) {
+        this.enableCloseMenuWhenTouchContent = enableCloseMenuWhenTouchContent;
+    }
+
     @Override
     public void initContainer() {
         ViewGroup bgLayout = (ViewGroup) createContainer(BACKGROUND_CONTAINER_ID);
@@ -196,7 +206,17 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
         View content = createContainer(CONTENT_CONTAINER_ID);
         container.addView(menu);
         container.addView(content);
-
+        if (enableCloseMenuWhenTouchContent) {
+            content.setOnTouchListener(new OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    v.performClick();
+                    boolean isMenuOpen = isMenuOpen();
+                    closeMenu();
+                    return isMenuOpen;
+                }
+            });
+        }
     }
 
     @Override
@@ -371,7 +391,7 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
                 SLog.d("scrollX : " + scrollX + " scrollY : " + scrollY);
                 final int slideWidth = mPagingTouchSlop;
                 if (scrollX == 0 || scrollX == menuWidth) {
-                    if (isMenuOpen) {
+                    if (isMenuOpen()) {
                         smoothScrollTo(0, 0);
                     } else {
                         smoothScrollTo(menuWidth, 0);
@@ -385,9 +405,9 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
                 if (scrollX > 0) {
                     if (slideX >= slideWidth) {
                         smoothScrollTo(0, 0);
-                        isMenuOpen = true;
+                        menuOpen = true;
                     } else {
-                        if (isMenuOpen) {
+                        if (isMenuOpen()) {
                             smoothScrollTo(0, 0);
                         } else {
                             smoothScrollTo(menuWidth, 0);
@@ -398,9 +418,9 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
                 else if (scrollX < 0) {
                     if (slideX >= slideWidth) {
                         smoothScrollTo(menuWidth, 0);
-                        isMenuOpen = false;
+                        menuOpen = false;
                     } else {
-                        if (isMenuOpen) {
+                        if (isMenuOpen()) {
                             smoothScrollTo(0, 0);
                         } else {
                             smoothScrollTo(menuWidth, 0);
@@ -409,7 +429,7 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
                 }
                 //未滑动
                 else {
-                    if (!isMenuOpen) {
+                    if (!isMenuOpen()) {
                         smoothScrollTo(menuWidth, 0);
                     } else {
                         smoothScrollTo(0, 0);
@@ -433,35 +453,40 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
         return super.onTouchEvent(ev);
     }
 
+    @Override
+    public boolean isMenuOpen() {
+        return menuOpen;
+    }
+
     /**
      * 打开菜单
      */
     public void openMenu() {
-        if (isMenuOpen) {
+        if (isMenuOpen()) {
             return;
         }
 
         smoothScrollTo(0, 0);
-        isMenuOpen = true;
+        menuOpen = true;
     }
 
     /**
      * 关闭菜单
      */
     public void closeMenu() {
-        if (!isMenuOpen) {
+        if (!isMenuOpen()) {
             return;
         }
 
         smoothScrollTo(menuWidth, 0);
-        isMenuOpen = false;
+        menuOpen = false;
     }
 
     /**
      * 切换菜单状态
      */
     public void toggle() {
-        if (isMenuOpen) {
+        if (isMenuOpen()) {
             closeMenu();
         } else {
             openMenu();
