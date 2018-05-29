@@ -48,7 +48,7 @@ ext {
             bintrayLicense: "Apache-2.0"
     ]
     def rxBindingVersion = '2.1.1'
-    def androidVersion = "25.3.1"
+    def androidVersion = "27.0.2"
     dependencies = [
             supportV4             : "com.android.support:support-v4:$androidVersion",
             appCompat             : "com.android.support:appcompat-v7:$androidVersion",
