@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/PickerviewLib/PickerviewLib.iml" filepath="$PROJECT_DIR$/PickerviewLib/PickerviewLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/PushSDK/PushSDK.iml" filepath="$PROJECT_DIR$/PushSDK/PushSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/SMTCompat.iml" filepath="$PROJECT_DIR$/SMTCompat.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SMTCompatLib/SMTCompatLib.iml" filepath="$PROJECT_DIR$/SMTCompatLib/SMTCompatLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/adapter/adapter.iml" filepath="$PROJECT_DIR$/adapter/adapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/apicontrol/apicontrol.iml" filepath="$PROJECT_DIR$/apicontrol/apicontrol.iml" />
       <module fileurl="file://$PROJECT_DIR$/autoupdate/autoupdate.iml" filepath="$PROJECT_DIR$/autoupdate/autoupdate.iml" />

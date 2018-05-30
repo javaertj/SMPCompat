@@ -1,7 +1,8 @@
 apply plugin: rootProject.ext.plugins.library
-apply plugin: rootProject.ext.plugins.maven
+//apply plugin: rootProject.ext.plugins.maven
+apply plugin: 'com.novoda.bintray-release'
 
-group = rootProject.ext.bintray.group
+//group = rootProject.ext.bintray.group
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -16,6 +17,14 @@ android {
     lintOptions {
         abortOnError false
     }
+}
+
+publish {
+    userOrg = 'ykbjson'      // bintray注册的用户名
+    groupId = 'com.drivingassisstantHouse.library'
+    artifactId = 'simpletourlib'// bintray创建的package
+    publishVersion = '1.0.0'
+    desc = 'Just a android lib for simpletour'
 }
 
 dependencies {
@@ -79,5 +88,17 @@ dependencies {
     //图片选择器
     compile rootProject.ext.dependencies.PictureSelector
     compile project(':PushSDK')
+    compile project(':PickerviewLib')
+    compile project(':recyclerview-swipe')
+    compile project(':adapter')
+    compile project(':baidumap')
+    compile project(':apicontrol')
+    compile project(':autoupdate')
+    compile project(':simpletourimlibrary')
+    compile project(':sharelibrary')
 }
+
+
+
+
 

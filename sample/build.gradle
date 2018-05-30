@@ -4,6 +4,9 @@ android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
 
+    lintOptions {
+        abortOnError false
+    }
 
     defaultConfig {
         applicationId "com.simpletour.app.sample"
@@ -18,10 +21,17 @@ android {
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
+    dexOptions {
+        //解决Multiple dex files define
+        preDexLibraries = false
+        jumboMode = true
+        //解决编译时as内存溢出
+        javaMaxHeapSize "6g"   //这个改大
+    }
 }
 
 dependencies {
     compile "com.android.support:appcompat-v7:27.0.2"
-    compile project(':SMTCompatLib')
+    compile project(':commonlibrary')
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }
