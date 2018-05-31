@@ -1,7 +1,16 @@
 apply plugin: rootProject.ext.plugins.library
-apply plugin: rootProject.ext.plugins.maven
+//apply plugin: rootProject.ext.plugins.maven
+apply plugin: 'com.novoda.bintray-release'
 
-group = rootProject.ext.bintray.group
+//group = rootProject.ext.bintray.group
+
+publish {
+    userOrg = 'ykbjson'      // bintray注册的用户名
+    groupId = rootProject.ext.bintray.group
+    artifactId = 'adapter'// bintray创建的package
+    publishVersion = rootProject.ext.bintray.version
+    desc = '各种adapter适配器'
+}
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
@@ -11,13 +20,6 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
     }
 
     lintOptions {

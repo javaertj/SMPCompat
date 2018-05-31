@@ -288,6 +288,8 @@
     <!-- 海军色 -->
     <color name="black">#000000</color>
     <!-- 黑色 -->
+    <color name="half_black">#33000000</color>
+    <!-- 半透明黑色 -->
 
     <color name="ocean_blue">#23B9F3</color>
     <!-- NavigateTabBar-->

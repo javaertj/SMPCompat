@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.drivingassisstantHouse.library.widget.SlideMenu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sm_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    app:close_menu_when_touch_content="true"
+    app:content_scale_coefficient="0.7"
+    app:slide_menu_content_enabled="false"
+    app:slide_menu_width="250dp"
+    app:slide_mode="MODE_SCROLL_WIDTH_SCALE" />

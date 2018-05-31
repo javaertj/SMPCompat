@@ -2,8 +2,6 @@ apply plugin: rootProject.ext.plugins.library
 //apply plugin: rootProject.ext.plugins.maven
 apply plugin: 'com.novoda.bintray-release'
 
-//group = rootProject.ext.bintray.group
-
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
@@ -17,13 +15,24 @@ android {
     lintOptions {
         abortOnError false
     }
+    buildTypes {
+        debug {
+            shrinkResources false
+            minifyEnabled false
+        }
+        release {
+            shrinkResources false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 publish {
     userOrg = 'ykbjson'      // bintray注册的用户名
-    groupId = 'com.drivingassisstantHouse.library'
+    groupId = rootProject.ext.bintray.group
     artifactId = 'simpletourlib'// bintray创建的package
-    publishVersion = '1.0.0'
+    publishVersion =rootProject.ext.bintray.version
     desc = 'Just a android lib for simpletour'
 }
 

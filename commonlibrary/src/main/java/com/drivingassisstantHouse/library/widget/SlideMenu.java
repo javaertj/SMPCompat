@@ -2,6 +2,7 @@ package com.drivingassisstantHouse.library.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.LayoutRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -10,12 +11,12 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.drivingassisstantHouse.library.R;
 import com.drivingassisstantHouse.library.tools.SLog;
-import com.drivingassisstantHouse.library.tools.ToolUnit;
 import com.nineoldandroids.view.ViewHelper;
 
 /**
@@ -81,6 +82,11 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
     private boolean menuOpen;
 
     /**
+     * 内容区域遮罩
+     */
+    private ImageView contentMask;
+
+    /**
      * 触摸内容区域关闭菜单
      */
     private boolean enableCloseMenuWhenTouchContent;
@@ -126,7 +132,7 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
         density = getResources().getDisplayMetrics().density;
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SlideMenu);
         mode = typedArray.getInteger(typedArray.getIndex(R.styleable.SlideMenu_slide_mode), MODE_NORMAL);
-        menuWidth = typedArray.getDimensionPixelSize(R.styleable.SlideMenu_slide_menu_width, ToolUnit.dipTopx(300));
+        menuWidth = typedArray.getDimensionPixelSize(R.styleable.SlideMenu_slide_menu_width, dipTopx(300));
         slideMenuContent = typedArray.getBoolean(R.styleable.SlideMenu_slide_menu_content_enabled, true);
         menuAlpha = typedArray.getFloat(R.styleable.SlideMenu_menu_alpha_coefficient, 0.6f);
         contentAlpha = typedArray.getFloat(R.styleable.SlideMenu_content_alpha_coefficient, 1f);
@@ -157,13 +163,13 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
         setOverScrollMode(OVER_SCROLL_NEVER);
         setClickable(true);
         final ViewConfiguration conf = ViewConfiguration.get(getContext());
-        mPagingTouchSlop = conf.getScaledTouchSlop() * 2;
+        mPagingTouchSlop = conf.getScaledTouchSlop() * 5;
     }
 
     /**
      * @param layoutResId
      */
-    public void setBackGround(int layoutResId) {
+    public void setBackGround(@LayoutRes int layoutResId) {
         View view = LayoutInflater.from(getContext()).inflate(layoutResId, this, false);
         setBackGround(view);
     }
@@ -179,7 +185,7 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
     /**
      * @param layoutResId
      */
-    public void setMenuBackGround(int layoutResId) {
+    public void setMenuBackGround(@LayoutRes int layoutResId) {
         View view = LayoutInflater.from(getContext()).inflate(layoutResId, this, false);
         setMenuBackGround(view);
     }
@@ -206,31 +212,19 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
         View content = createContainer(CONTENT_CONTAINER_ID);
         container.addView(menu);
         container.addView(content);
-        if (enableCloseMenuWhenTouchContent) {
-            content.setOnTouchListener(new OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    v.performClick();
-                    boolean isMenuOpen = isMenuOpen();
-                    closeMenu();
-                    return isMenuOpen;
-                }
-            });
-        }
     }
 
     @Override
     public View createContainer(int id) {
         View container = new LinearLayout(getContext());
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(-2, -1);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(-2, -1);
         if (id == MENU_CONTAINER_ID) {
             container = new FrameLayout(getContext());
             params.width = menuWidth;
-
         } else if (id == BACKGROUND_CONTAINER_ID) {
             container = new FrameLayout(getContext());
         } else if (id == CONTENT_CONTAINER_ID) {
-            ((LinearLayout) container).setOrientation(LinearLayout.VERTICAL);
+            container = new FrameLayout(getContext());
             params.width = getResources().getDisplayMetrics().widthPixels;
         } else {
             ((LinearLayout) container).setOrientation(LinearLayout.HORIZONTAL);
@@ -287,6 +281,22 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
         }
 
         container.addView(view);
+        //遮罩
+        if (id == CONTENT_CONTAINER_ID) {
+            contentMask = new ImageView(getContext());
+            contentMask.setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
+            contentMask.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            contentMask.setImageResource(R.color.transparent);
+            contentMask.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (enableCloseMenuWhenTouchContent && isMenuOpen()) {
+                        closeMenu();
+                    }
+                }
+            });
+            container.addView(contentMask);
+        }
     }
 
 
@@ -354,6 +364,13 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
         if (null != onSlideScrollListener) {
             onSlideScrollListener.onScrollChanged(l, t, oldl, oldt);
         }
+        menuOpen = l == 0;
+        ViewHelper.setAlpha(contentMask, 1 - l * 1.0f / menuWidth);
+        if (l == menuWidth) {
+            contentMask.setVisibility(GONE);
+        } else {
+            contentMask.setVisibility(VISIBLE);
+        }
     }
 
     @Override
@@ -405,7 +422,7 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
                 if (scrollX > 0) {
                     if (slideX >= slideWidth) {
                         smoothScrollTo(0, 0);
-                        menuOpen = true;
+//                        menuOpen = true;
                     } else {
                         if (isMenuOpen()) {
                             smoothScrollTo(0, 0);
@@ -418,7 +435,7 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
                 else if (scrollX < 0) {
                     if (slideX >= slideWidth) {
                         smoothScrollTo(menuWidth, 0);
-                        menuOpen = false;
+//                        menuOpen = false;
                     } else {
                         if (isMenuOpen()) {
                             smoothScrollTo(0, 0);
@@ -462,24 +479,16 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
      * 打开菜单
      */
     public void openMenu() {
-        if (isMenuOpen()) {
-            return;
-        }
-
         smoothScrollTo(0, 0);
-        menuOpen = true;
+//        menuOpen = true;
     }
 
     /**
      * 关闭菜单
      */
     public void closeMenu() {
-        if (!isMenuOpen()) {
-            return;
-        }
-
         smoothScrollTo(menuWidth, 0);
-        menuOpen = false;
+//        menuOpen = false;
     }
 
     /**
@@ -492,6 +501,17 @@ public class SlideMenu extends HorizontalScrollView implements SlideBase {
             openMenu();
         }
     }
+
+    /**
+     * dip转换px
+     *
+     * @param dipValue dip数值
+     * @return px数值
+     */
+    private int dipTopx(float dipValue) {
+        return (int) (dipValue * density + 0.5f);
+    }
+
 
     public void setOnSlideScrollListener(OnSlideScrollListener onSlideScrollListener) {
         this.onSlideScrollListener = onSlideScrollListener;

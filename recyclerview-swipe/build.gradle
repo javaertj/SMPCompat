@@ -1,7 +1,16 @@
 apply plugin: rootProject.ext.plugins.library
-apply plugin: rootProject.ext.plugins.maven
+//apply plugin: rootProject.ext.plugins.maven
+apply plugin: 'com.novoda.bintray-release'
 
-group = rootProject.ext.bintray.group
+//group = rootProject.ext.bintray.group
+
+publish {
+    userOrg = 'ykbjson'      // bintray注册的用户名
+    groupId = rootProject.ext.bintray.group
+    artifactId = 'recyclerview-swipe'// bintray创建的package
+    publishVersion = rootProject.ext.bintray.version
+    desc = '带策划删除和排序的recyclerview'
+}
 
 android {
 
@@ -13,6 +22,22 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    buildTypes {
+        debug {
+            shrinkResources false
+            minifyEnabled false
+        }
+        release {
+            shrinkResources false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 
     resourcePrefix 'recycler_swipe_'

@@ -20,12 +20,12 @@ ext {
     ]
 
     bintray = [
-            version       : '2.0.0',
+            version       : '1.0.1',
 
             siteUrl       : 'https://github.com/ykbjson/SMPCompat',
             gitUrl        : 'https://github.com/ykbjson/SMPCompat.git',
 
-            group         : 'com.github.ykbjson',
+            group         : 'com.simpletour.app.lib',
 
             // project
             packaging     : 'aar',
@@ -42,9 +42,9 @@ ext {
             developerEmail: 'ykbdevelop@gmail.com',
 
             // bintray
-            binrayLibrary : "SMTCompatLib",
+            binrayLibrary : "simpletour",
             bintrayRepo   : "maven",
-            bintrayUser   : 'yankebin',
+            bintrayUser   : 'ykbjson',
             bintrayLicense: "Apache-2.0"
     ]
     def rxBindingVersion = '2.1.1'
