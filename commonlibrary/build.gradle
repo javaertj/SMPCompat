@@ -100,7 +100,7 @@ dependencies {
     compile project(':PickerviewLib')
     compile project(':recyclerview-swipe')
     compile project(':adapter')
-    compile project(':baidumap')
+//    compile project(':baidumap')
     compile project(':apicontrol')
     compile project(':autoupdate')
     compile project(':simpletourimlibrary')

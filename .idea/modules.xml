@@ -15,6 +15,7 @@
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/sharelibrary/sharelibrary.iml" filepath="$PROJECT_DIR$/sharelibrary/sharelibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/simpletourimlibrary/simpletourimlibrary.iml" filepath="$PROJECT_DIR$/simpletourimlibrary/simpletourimlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/skinlibrary/skinlibrary.iml" filepath="$PROJECT_DIR$/skinlibrary/skinlibrary.iml" />
     </modules>
   </component>
 </project>

@@ -47,4 +47,5 @@ dependencies {
     compile project(':commonlibrary')
 //    compile 'com.simpletour.app.lib:simpletourlib:1.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    compile project(':skinlibrary')
 }

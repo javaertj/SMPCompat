@@ -7,7 +7,7 @@ apply plugin: 'com.novoda.bintray-release'
 publish {
     userOrg = 'ykbjson'      // bintray注册的用户名
     groupId = rootProject.ext.bintray.group
-    artifactId = 'baidumap'// bintray创建的package
+    artifactId = 'rxwebsocket'// bintray创建的package
     publishVersion = rootProject.ext.bintray.version
     desc = '基于RXJava的websocket'
 }
