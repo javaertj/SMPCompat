@@ -1,0 +1,43 @@
+apply plugin: rootProject.ext.plugins.library
+apply plugin: 'com.novoda.bintray-release'
+
+publish {
+    userOrg = 'ykbjson'      // bintray注册的用户名
+    groupId = rootProject.ext.bintray.group
+    artifactId = 'skinlibrary'// bintray创建的package
+    publishVersion = rootProject.ext.bintray.version
+    desc = '换肤框架'
+}
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    buildTypes {
+        debug {
+            shrinkResources false
+            minifyEnabled false
+        }
+        release {
+            shrinkResources false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile rootProject.ext.dependencies.appCompat
+}
