@@ -68,8 +68,8 @@ public class AGHeartStateMachine implements IAGClientStateChangeCallback, IAGOnR
 
 
     private synchronized void send() {
-        heartMessageModel = build();
         if (null != webSocket) {
+            heartMessageModel = build();
             webSocket.sendHeartMessage(heartMessageModel, heartRequestHandler);
         }
     }

@@ -20,7 +20,7 @@ ext {
     ]
 
     bintray = [
-            version       : '1.0.4',
+            version       : '1.0.5',
 
             siteUrl       : 'https://github.com/ykbjson/SMPCompat',
             gitUrl        : 'https://github.com/ykbjson/SMPCompat.git',
