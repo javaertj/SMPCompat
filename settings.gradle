@@ -1,1 +1,1 @@
-include ':sample', ':baidumap', ':adapter', ':PickerviewLib', ':recyclerview-swipe', ':rxwebsocket', ':simpletourimlibrary', ':apicontrol', ':autoupdate', ':commonlibrary', ':PushSDK', ':sharelibrary',":skinlibrary"
+include ':sample', ':baidumap', ':adapter', ':PickerviewLib', ':recyclerview-swipe', ':rxwebsocket', ':simpletourimlibrary', ':apicontrol', ':autoupdate', ':commonlibrary', ':PushSDK', ':sharelibrary',":skinlibrary",":mmvp",":mmvpannotation",":mmvpcompiler"

@@ -15,6 +15,9 @@
             <option value="$PROJECT_DIR$/autoupdate" />
             <option value="$PROJECT_DIR$/baidumap" />
             <option value="$PROJECT_DIR$/commonlibrary" />
+            <option value="$PROJECT_DIR$/mmvp" />
+            <option value="$PROJECT_DIR$/mmvpannotation" />
+            <option value="$PROJECT_DIR$/mmvpcompiler" />
             <option value="$PROJECT_DIR$/recyclerview-swipe" />
             <option value="$PROJECT_DIR$/rxwebsocket" />
             <option value="$PROJECT_DIR$/sample" />

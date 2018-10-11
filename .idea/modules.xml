@@ -10,6 +10,9 @@
       <module fileurl="file://$PROJECT_DIR$/autoupdate/autoupdate.iml" filepath="$PROJECT_DIR$/autoupdate/autoupdate.iml" />
       <module fileurl="file://$PROJECT_DIR$/baidumap/baidumap.iml" filepath="$PROJECT_DIR$/baidumap/baidumap.iml" />
       <module fileurl="file://$PROJECT_DIR$/commonlibrary/commonlibrary.iml" filepath="$PROJECT_DIR$/commonlibrary/commonlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mmvp/mmvp.iml" filepath="$PROJECT_DIR$/mmvp/mmvp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mmvpannotation/mmvpannotation.iml" filepath="$PROJECT_DIR$/mmvpannotation/mmvpannotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mmvpcompiler/mmvpcompiler.iml" filepath="$PROJECT_DIR$/mmvpcompiler/mmvpcompiler.iml" />
       <module fileurl="file://$PROJECT_DIR$/recyclerview-swipe/recyclerview-swipe.iml" filepath="$PROJECT_DIR$/recyclerview-swipe/recyclerview-swipe.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxwebsocket/rxwebsocket.iml" filepath="$PROJECT_DIR$/rxwebsocket/rxwebsocket.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
