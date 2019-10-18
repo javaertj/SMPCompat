@@ -31,18 +31,18 @@ public final class AGIMConfig {
     /**
      * 最大心跳间隔时间
      */
-    public static int MAX_HERAT = 2 * 60 * 60;
+    public static int MAX_HEART = 2 * 60 * 60;
     /**
      * 最小心跳间隔时间
      */
-    public static int MIN_HERAT = 10;
+    public static int MIN_HEART = 10;
     /**
      * 稳定心跳间隔时间
      */
-    public static int STABLE_HERAT = 4 * 60;
+    public static int STABLE_HEART = 4 * 60;
     /**
      * 心跳步进时间
      */
-    public static int HERAT_STEP =15;
+    public static int HEART_STEP =15;
 
 }

@@ -276,6 +276,7 @@ public final class AGWebSocketClient implements IAGMessageSendStatusCallback {
             return;
         }
         if (null != heartStateMachine) {
+            heartStateMachine.onReceiveHeartMessage(messageModel);
         }
     }
 
@@ -381,7 +382,7 @@ public final class AGWebSocketClient implements IAGMessageSendStatusCallback {
      * @param messageModel 消息体
      */
     public synchronized void sendHeartMessage(AGHeartMessageModel messageModel,
-                                               IAGRequestHandler<AGHeartMessageModel, AGHeartMessageModel> callback) {
+                                              IAGRequestHandler<AGHeartMessageModel, AGHeartMessageModel> callback) {
         if (null == messageModel) {
             throw new IllegalArgumentException("Invalid AGHeartMessageModel to sendChatMessage");
         }
@@ -552,7 +553,7 @@ public final class AGWebSocketClient implements IAGMessageSendStatusCallback {
         }
     }
 
-    private class DefaultReconnectStrategy extends ReconnectStrategyAble {
+    private static class DefaultReconnectStrategy extends ReconnectStrategyAble {
 
         DefaultReconnectStrategy(long initTime) {
             super(initTime);

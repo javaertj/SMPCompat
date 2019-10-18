@@ -42,7 +42,7 @@ import static com.simpletour.library.caocao.heart.enums.AGHeartMachineStateEnum.
 public class AGHeartStateMachine implements IAGClientStateChangeCallback, IAGOnReceiveHeartMessageCallback {
     private final BlockingQueue<AGHeartMessageModel> messageQueen = new LinkedBlockingDeque<>();
     private Context context;
-    private int currentHeart = AGIMConfig.STABLE_HERAT;
+    private int currentHeart = AGIMConfig.STABLE_HEART;
     private AGWebSocketClient webSocket;
     private AGHeartMachineStateEnum heartMachineStateEnum = ACTIVE;
     private int subActiveCount;
@@ -75,7 +75,7 @@ public class AGHeartStateMachine implements IAGClientStateChangeCallback, IAGOnR
     }
 
     private void active() {
-        successHeart = currentHeart = AGIMConfig.STABLE_HERAT;
+        successHeart = currentHeart = AGIMConfig.STABLE_HEART;
         heartBeatHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -98,7 +98,7 @@ public class AGHeartStateMachine implements IAGClientStateChangeCallback, IAGOnR
     }
 
     private void subActive() {
-        successHeart = currentHeart = AGIMConfig.MIN_HERAT;
+        successHeart = currentHeart = AGIMConfig.MIN_HEART;
         heartBeatHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -112,7 +112,7 @@ public class AGHeartStateMachine implements IAGClientStateChangeCallback, IAGOnR
     }
 
     private void autoAdapt() {
-        successHeart = currentHeart = AGIMConfig.MIN_HERAT;
+        successHeart = currentHeart = AGIMConfig.MIN_HEART;
         heartBeatHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -163,6 +163,7 @@ public class AGHeartStateMachine implements IAGClientStateChangeCallback, IAGOnR
 
     private void tryNotifyReConnect() {
         if (null != webSocket) {
+
         }
     }
 
@@ -199,9 +200,9 @@ public class AGHeartStateMachine implements IAGClientStateChangeCallback, IAGOnR
             } else {
                 if (heartMachineStateEnum == AUTO_ADAPT) {
                     successHeart = currentHeart;
-                    currentHeart += AGIMConfig.HERAT_STEP;
-                    if (currentHeart > AGIMConfig.MAX_HERAT) {
-                        currentHeart = AGIMConfig.MAX_HERAT;
+                    currentHeart += AGIMConfig.HEART_STEP;
+                    if (currentHeart > AGIMConfig.MAX_HEART) {
+                        currentHeart = AGIMConfig.MAX_HEART;
                     }
                 } else if (heartMachineStateEnum == STABLE) {
 

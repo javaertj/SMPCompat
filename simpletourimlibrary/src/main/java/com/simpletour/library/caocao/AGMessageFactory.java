@@ -167,12 +167,12 @@ public class AGMessageFactory {
         } else {
             String multiContent;
             if (contentType == IAGMessageContent.MessageContentType.IMAGE) {
-                AGPhotoContentModel AGPhotoContentModel = model.photoContent;
-                if (AGPhotoContentModel != null) {
-                    multiContent = AGPhotoContentModel.mediaId;
+                AGPhotoContentModel photoContentModel = model.photoContent;
+                if (photoContentModel != null) {
+                    multiContent = photoContentModel.mediaId;
                     messageContent = new AGMessageContent.ImageContentImpl(multiContent,
-                            AGUtils.longValue(AGPhotoContentModel.picSize), AGUtils.intValue(AGPhotoContentModel.type),
-                            AGUtils.intValue(AGPhotoContentModel.fileType), AGPhotoContentModel.picBytes, AGUtils.intValue(AGPhotoContentModel.orientation));
+                            AGUtils.longValue(photoContentModel.picSize), AGUtils.intValue(photoContentModel.type),
+                            AGUtils.intValue(photoContentModel.fileType), photoContentModel.picBytes, AGUtils.intValue(photoContentModel.orientation));
                 }
             } else if (contentType == IAGMessageContent.MessageContentType.AUDIO) {
                 AGAudioContentModel audioContentModel = model.audioContent;
