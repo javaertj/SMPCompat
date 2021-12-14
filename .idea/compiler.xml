@@ -4,5 +4,21 @@
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
     </annotationProcessing>
+    <bytecodeTargetLevel target="1.7">
+      <module name="SMPCompat.adapter" target="1.8" />
+      <module name="SMPCompat.apicontrol" target="1.8" />
+      <module name="SMPCompat.autoupdate" target="1.8" />
+      <module name="SMPCompat.baidumap" target="1.8" />
+      <module name="SMPCompat.commonlibrary" target="1.8" />
+      <module name="SMPCompat.mmvp" target="1.8" />
+      <module name="SMPCompat.PickerviewLib" target="1.8" />
+      <module name="SMPCompat.PushSDK" target="1.8" />
+      <module name="SMPCompat.recyclerview-swipe" target="1.8" />
+      <module name="SMPCompat.rxwebsocket" target="1.8" />
+      <module name="SMPCompat.sample" target="1.8" />
+      <module name="SMPCompat.sharelibrary" target="1.8" />
+      <module name="SMPCompat.simpletourimlibrary" target="1.8" />
+      <module name="SMPCompat.skinlibrary" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
