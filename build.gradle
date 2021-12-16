@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.novoda:bintray-release:0.8.1'
-        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.android.tools.build:gradle:4.2.0-beta02'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
